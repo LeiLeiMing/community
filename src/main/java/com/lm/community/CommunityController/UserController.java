@@ -2,12 +2,20 @@ package com.lm.community.CommunityController;
 
 import com.lm.community.Domain.AccessToken;
 import com.lm.community.Domain.GithubUser;
+import com.lm.community.Domain.SaveSession;
 import com.lm.community.Provider.GithubUtils;
+import com.lm.community.Service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -27,9 +35,14 @@ public class UserController {
     private String client_secret;
     @Value("${github.redirect.uri}")
     private String redirect_url;
+    @Autowired
+    private SessionService sessionService;
 
     @GetMapping("/callback")
-    public String callback(@RequestParam(name = "code")String code,@RequestParam(name = "state")String state){
+    public String callback(@RequestParam(name = "code")String code,
+                           @RequestParam(name = "state")String state,
+                           HttpServletRequest request,
+                           HttpServletResponse response){
         AccessToken token = new AccessToken();
         token.setClient_id(client_id);
         token.setClient_secret(client_secret);
@@ -38,8 +51,21 @@ public class UserController {
         token.setState(state);
         String accessToken = githubUtils.getAccessToken(token);
         GithubUser user = githubUtils.getUser(accessToken);
-        String name = user.getName();
-        System.out.println(name);
-        return "index";
+        if(user != null){
+            request.getSession().setAttribute("user",user);
+            SaveSession session = new SaveSession();
+            session.setTime(new Date());
+            String s = UUID.randomUUID().toString();
+            session.setToken(s);
+            session.setUsername(user.getName());
+            sessionService.saveSession(session);
+            //保存到Cookie中
+            Cookie cookie = new Cookie("token",s);
+            cookie.setMaxAge(Integer.MAX_VALUE);
+            //重定向至首页
+            return "redirect:/";
+        }else{
+            return "redirect:/";
+        }
     }
 }
