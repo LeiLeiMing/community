@@ -57,11 +57,12 @@ public class UserController {
             session.setTime(new Date());
             String s = UUID.randomUUID().toString();
             session.setToken(s);
-            session.setUsername(user.getName());
+            session.setName(user.getName());
             sessionService.saveSession(session);
             //保存到Cookie中
             Cookie cookie = new Cookie("token",s);
             cookie.setMaxAge(Integer.MAX_VALUE);
+            response.addCookie(cookie);
             //重定向至首页
             return "redirect:/";
         }else{

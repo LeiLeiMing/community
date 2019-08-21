@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface SaveSessionDao {
-    @Insert("insert into savesession (username,token,time) values(#{username},#{token},#{time})")
+    @Insert("insert into savesession (name,token,time) values(#{name},#{token},#{time})")
     void saveSession(SaveSession saveSession);
 }

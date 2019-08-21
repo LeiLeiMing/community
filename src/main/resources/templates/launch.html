@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>萌新社区</title>
+    <title>发起--萌新社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.css">
     <script src="/js/bootstrap.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
-
+    
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -39,8 +39,45 @@
                     </ul>
                 </li>
             </ul>
+            </ul>
         </div>
     </div>
 </nav>
+<div style="background: #efefef">
+<div class="container">
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
+        <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
+        <hr>
+        <form>
+            <div class="form-group">
+                <label >问题标题（简单扼要）:</label>
+                <input type="text" class="form-control" id="title" placeholder="问题标题">
+            </div>
+            <div class="form-group">
+                <label >问题补充（必填，请参照右侧提示）</label>
+                <textarea class="form-control" rows="10" cols="30"></textarea>
+            </div>
+            <div class="form-group">
+                <label >添加标签（标签以","分隔，每个标签字数不超过10个）:</label>
+                <input style="width: 40%" type="text" class="form-control" id="tag" placeholder="添加标签">
+            </div>
+            <div  class="form-group">
+                <button style="float: right;margin-bottom: 20px" type="submit" class="btn btn-success">发布</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+        <h2>问题发起指南</h2>
+        <hr>
+        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+        <h4>问题标题：</h4>请用简洁扼要的文字概况问题，字数不超过50<br>
+        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+        <h4>问题补充：</h4>补充描述你的问题内容，问题补充描述清晰，并提供相关资料。<br>
+        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+        <h4>问题标签：</h4>设置问题标签，多个标签用","隔开，每个标签字数不超10<br>
+    </div>
+</div>
+</div>
 </body>
 </html>

@@ -16,7 +16,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String hello(HttpServletRequest request,HttpServletResponse response){
-        loginService.checkCookie(request,response);
+        //loginService.checkCookie(request,response);
         return "index";
     }
 }
