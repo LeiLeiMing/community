@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.css">
     <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-2.2.3.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -17,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">萌新社区</a>
+            <a class="navbar-brand" href="/">萌新社区</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,6 +30,7 @@
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="/launch">发起</a></li>
                 <li th:if="${session.user==null}"><a href="https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
                 <li th:if="${session.user!=null}" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
@@ -48,21 +50,21 @@
     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
         <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
         <hr>
-        <form>
+        <form action="/dolaunch" method="post">
             <div class="form-group">
-                <label >问题标题（简单扼要）:</label>
-                <input type="text" class="form-control" id="title" placeholder="问题标题">
+                <label >问题标题（简单扼要）:<font id="ntitle" style="display: none;" color="red">*标题不能为空</font></label>
+                <input id="title" onblur="titleonblus()" type="text" class="form-control" name="title" placeholder="问题标题">
             </div>
             <div class="form-group">
-                <label >问题补充（必填，请参照右侧提示）</label>
-                <textarea class="form-control" rows="10" cols="30"></textarea>
+                <label >问题补充（必填，请参照右侧提示）<font id="ndesc" style="display: none;" color="red">*问题补充不能为空</font></label>
+                <textarea id="desc" onblur="desconblus()" class="form-control" rows="10" cols="30" name="desction"></textarea>
             </div>
             <div class="form-group">
-                <label >添加标签（标签以","分隔，每个标签字数不超过10个）:</label>
-                <input style="width: 40%" type="text" class="form-control" id="tag" placeholder="添加标签">
+                <label >添加标签（标签以","分隔，每个标签字数不超过10个）:<font id="ntag" style="display: none;" color="red">*标签不能为空</font></label>
+                <input id="tag" onblur="tagonblus()" style="width: 40%" type="text" class="form-control" name="tag" placeholder="添加标签">
             </div>
             <div  class="form-group">
-                <button style="float: right;margin-bottom: 20px" type="submit" class="btn btn-success">发布</button>
+                <button id="sub" style="float: right;margin-bottom: 20px;" type="submit" class="btn btn-success">发布</button>
             </div>
         </form>
     </div>
@@ -80,4 +82,57 @@
 </div>
 </div>
 </body>
+<script>
+
+    $(function(){
+        $('#sub').attr('disabled',true);
+    });
+
+    function titleonblus(){
+        //获取文本框内容
+        var title = $('#title').val();
+        var desc = $('#desc').val();
+        var tag = $('#tag').val();
+        if (title==''){
+            $('#ntitle').show();
+            $('#sub').attr('disabled',true);
+        }else{
+            $('#ntitle').hide();
+            if (title!=''&&desc!=''&&tag!=''){
+                $('#sub').attr('disabled',false);
+            }
+        }
+    }
+    function desconblus(){
+        //获取文本框内容
+        var title = $('#title').val();
+        var desc = $('#desc').val();
+        var tag = $('#tag').val();
+        if (desc==''){
+            $('#ndesc').show();
+            $('#sub').attr('disabled',true);
+        }else{
+            $('#ndesc').hide();
+            if (title!=''&&desc!=''&&tag!=''){
+                $('#sub').attr('disabled',false);
+            }
+
+        }
+    }
+    function tagonblus(){
+        //获取文本框内容
+        var title = $('#title').val();
+        var desc = $('#desc').val();
+        var tag = $('#tag').val();
+        if (tag==''){
+            $('#ntag').show();
+            $('#sub').attr('disabled',true);
+        }else{
+            $('#ntag').hide();
+            if (title!=''&&desc!=''&&tag!=''){
+                $('#sub').attr('disabled',false);
+            }
+        }
+    }
+</script>
 </html>

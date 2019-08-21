@@ -20,13 +20,12 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 登录前会调用这个方法进行Cookie判断
      * @param request
-     * @param response
      * @return
      */
     @Override
-    public boolean checkCookie( HttpServletRequest request, HttpServletResponse response) {
+    public SaveSession checkCookie( HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
+        if(cookies!=null&&cookies.length!=0){
             for(Cookie cookie : cookies){
                 if("token".equals(cookie.getName())){
                     String value = cookie.getValue();
@@ -35,12 +34,12 @@ public class LoginServiceImpl implements LoginService {
                     if(user!=null){
                         //有，把查询到的用户名放进去
                         request.getSession().setAttribute("user",user);
-                        return true;
+                        return user;
                     }
                 }
 
             }
         }
-        return false;
+        return null;
     }
 }

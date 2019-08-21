@@ -4,6 +4,7 @@ import com.lm.community.Domain.AccessToken;
 import com.lm.community.Domain.GithubUser;
 import com.lm.community.Domain.SaveSession;
 import com.lm.community.Provider.GithubUtils;
+import com.lm.community.Service.GithubUserService;
 import com.lm.community.Service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,8 @@ public class UserController {
     private String redirect_url;
     @Autowired
     private SessionService sessionService;
+    @Autowired
+    private GithubUserService githubUserService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code")String code,
@@ -52,6 +55,8 @@ public class UserController {
         String accessToken = githubUtils.getAccessToken(token);
         GithubUser user = githubUtils.getUser(accessToken);
         if(user != null){
+            //用户信息存进数据库
+            githubUserService.saveGithubUser(user);
             request.getSession().setAttribute("user",user);
             SaveSession session = new SaveSession();
             session.setTime(new Date());
