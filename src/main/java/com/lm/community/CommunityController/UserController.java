@@ -57,11 +57,13 @@ public class UserController {
         if(user != null){
             //用户信息存进数据库
             githubUserService.saveGithubUser(user);
+            //把用户的图片
             request.getSession().setAttribute("user",user);
             SaveSession session = new SaveSession();
             session.setTime(new Date());
             String s = UUID.randomUUID().toString();
             session.setToken(s);
+            session.setAvatar_url(user.getAvatar_url());
             session.setName(user.getName());
             sessionService.saveSession(session);
             //保存到Cookie中

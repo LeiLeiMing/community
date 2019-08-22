@@ -29,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
             for(Cookie cookie : cookies){
                 if("token".equals(cookie.getName())){
                     String value = cookie.getValue();
-                    //核对数据库是否有这个value
+                    //核对Cookie数据库是否有这个value
                     SaveSession user = loginDao.findSessionByToken(value);
                     if(user!=null){
                         //有，把查询到的用户名放进去

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class LaunchServiceImpl implements LaunchService {
      */
     @Override
     public List<Question> findAllQuestion() {
+
         return launchDao.findAllQuestion();
     }
 }

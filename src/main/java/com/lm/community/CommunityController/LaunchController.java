@@ -34,7 +34,7 @@ public class LaunchController {
         if(question!=null){
             //存进数据库
             launchService.saveQuestion(question,request);
-            return "/index";
+            return "redirect:/";
         }
         request.getSession().setAttribute("error","提交数据不能为空");
         return "/launch";

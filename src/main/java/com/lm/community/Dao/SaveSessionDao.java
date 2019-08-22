@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface SaveSessionDao {
-    @Insert("insert into savesession (name,token,time) values(#{name},#{token},#{time})")
+    @Insert("insert into savesession (name,token,time,avatar_url) values(#{name},#{token},#{time},#{avatar_url})")
     void saveSession(SaveSession saveSession);
 
     @Select("select * from savesession where id = #{author}")

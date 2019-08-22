@@ -10,5 +10,6 @@ public class SaveSession {
     private String name;
     private String token;
     private Date time;
+    private String avatar_url;
 
 }

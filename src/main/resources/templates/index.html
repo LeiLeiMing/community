@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>萌新社区</title>
+    <title>知秋论坛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/community.css">
@@ -18,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">萌新社区</a>
+            <a class="navbar-brand" href="/">知秋论坛</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,23 +47,26 @@
 <div style="background: #efefef">
     <div class="container">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
             <hr>
-            <div class="media">
+            <div class="media" th:each="question : ${allquestion}">
                 <div class="media-left">
                     <a href="#">
-                        <img style="width: 40px;height: 40px" class="img-rounded" src="https://avatars2.githubusercontent.com/u/49333940?v=4" alt="...">
+                        <img style="width: 40px;height: 40px" class="img-rounded" th:src="${question.saveSession.avatar_url}" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">如何找到实习?找实习的一些事情你需要了解</h4>
-                    <span class="text-desc">2 个回复 . 31 次浏览 . 1小时前</span>
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h5 class="text-desc" th:text="${question.desction}"></h5>
+                        <span class="text-desc"><span th:text="${question.commentcount}"></span>个回复 .
+                        <span th:text="${question.viewcount}"></span>次浏览 .
+                            <span th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span></span>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
-            <h2><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>热门话题</h2>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12"  >
+            <h3><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>热门话题</h3>
         </div>
     </div>
 </div>
