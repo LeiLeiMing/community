@@ -16,6 +16,7 @@ public class Question {
     private int likecount;
     private String tag;
     private String title;
+    private String username;
     //文章和当前Cookie中的用户是多对一
     private SaveSession saveSession;
 
