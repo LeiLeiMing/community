@@ -15,10 +15,10 @@
     <div class="container" style="background: white">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
             <h3 th:text="${question.title}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></h3>
-            <span class="text-desc"><span class="label label-default" th:text="${question.tag}"></span></span>
-                        <span class="text-desc"> | 作者：<a th:text="${question.username}"></a></span>
-                        <span class="text-desc"> | 发布于<span  th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span></span>
-                        <span  class="text-desc" > | 阅读数：<span th:text="${question.viewcount}"></span></span>
+            <span>
+                <span class="text-desc">  作者：<a th:text="${question.username}"></a></span>
+                <span class="text-desc"> | 发布于<span  th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span></span>
+                <span  class="text-desc" > | 阅读数：<span th:text="${question.viewcount}"></span></span>
             </span>
             <hr>
             <h5><span th:text="${question.desction}"></span></h5>
@@ -27,13 +27,19 @@
                 <span th:text="${#dates.format(question.createtime,'yyyy-MM-dd')}"></span>
                 <span th:if="${session.user!=null&&session.user.getName()==question.username}">
                     <span class=" glyphicon glyphicon-edit " aria-hidden="true"></span>
-                    <a th:href="@{'/edit/'+${question.id}}">编辑</a>
+                    <a class="text-desc" th:href="@{'/edit/'+${question.id}}">编辑</a>
                 </span>
             </span>
-            <span  style="float: right;font-size: 25px;"><span id="like" onclick="like()" class=" glyphicon glyphicon-thumbs-up " aria-hidden="true"></span>
-                <span id="yes" style="display: none">谢谢!</span>
-                <span id="begin">赞一个</span>
-            </span>
+            <!--<span  style="float: right;font-size: 25px;"><span id="like" onclick="like()" class=" glyphicon glyphicon-thumbs-up " aria-hidden="true"></span>-->
+                <!--<span id="yes" style="display: none">谢谢!</span>-->
+                <!--<span id="begin">赞一个</span>-->
+            <!--</span>-->
+            <!--标签-->
+            <div>
+                <span th:each="tag : ${question.tag.split(' ')}" >
+                    <span class="label label-info" th:text="${tag}"></span>
+                </span>
+            </div>
             <hr>
             <span>
                 <h4>评论人数:<span th:text="${question.commentcount}"></span></h4>
@@ -55,12 +61,12 @@
                                 <span th:text="${comment.comment}"></span>
                             </span>
                     </span>
-                    <span class="text-desc">
+                    <span>
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp&nbsp&nbsp&nbsp
-                        <span th:onclick="|commentclick(${comment.id})|" class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                        <span ><span th:text="${comment.recommentcount}"></span></span>
-                        <span style="float: right;" th:text="${#dates.format(comment.commenttime,'yyyy-MM-dd hh:mm')}"></span>
+                        <span th:onclick="|commentclick(${comment.id})|" th:id="'type-'+${comment.id}" class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                        <span class="text-desc"><span th:text="${comment.recommentcount}"></span></span>
+                        <span class="text-desc" style="float: right;" th:text="${#dates.format(comment.commenttime,'yyyy-MM-dd hh:mm')}"></span>
                     </span>
 
                         <!--二级回复-->
@@ -85,7 +91,7 @@
                             <hr>
                             <div class="form-group" style="margin-bottom: 20px;margin-left: 20px;margin-top: 20px" >
                                 <!--当前评论的用户id-->
-                                <input th:id="'recommentor-'+${comment.id}" type="hidden"  th:value="${session.user.id}">
+                                <input th:id="'recommentor-'+${comment.id}" type="hidden"  th:if="${session.user!=null}" th:value="${session.user.id}">
                                 <!--当前所回复的用户id-->
                                 <input th:id="'commentor-'+${comment.id}" type="hidden"  th:value="${comment.commentor}">
                                 <span class="form-group">
@@ -105,30 +111,41 @@
                 </span>
             </span>
             <!--/评论-->
+            <!--当前用户-->
             <span>
                 <span><h4>当前用户:</h4></span>
-                <span class="media-left">
-                    <a href="#">
-                        <img style="width: 35px;height: 35px" class="img-rounded" th:src="${session.user.avatar_url}" alt="...">
-                    </a>
+                <span th:if="${session.user!=null}">
+                    <span class="media-left">
+                        <a href="#">
+                            <img style="width: 35px;height: 35px" class="img-rounded" th:src="${session.user.avatar_url}" alt="...">
+                        </a>
+                    </span>
+                    <span class="media-body">
+                        <h4 class="media-heading" style="margin-top: 7px" th:text="${session.user.name}"></h4>
+                    </span>
                 </span>
-                <span class="media-body">
-                    <h4 class="media-heading" style="margin-top: 7px" th:text="${session.user.name}"></h4>
+                 <span th:if="${session.user==null}">
+                    <span class="media-left">
+                        <a href="#">
+                            <img style="width: 35px;height: 35px" class="img-rounded"  alt="...">
+                        </a>
+                    </span>
+                    <span class="media-body">
+                        <h4 class="media-heading" style="margin-top: 7px">尚未登录</h4>
+                    </span>
                 </span>
-                 <div>
                 <div class="form-group">
-                    <textarea id="comment" class="form-control" rows="10" cols="20" name="comment" placeholder="说点什么吧"></textarea>
+                        <textarea id="comment" class="form-control" rows="10" cols="20" name="comment" placeholder="说点什么吧"></textarea>
                 </div>
-            </div>
             <div  class="form-group">
                 <button onclick="post()" style="float: right;margin-bottom: 20px;" type="button" class="btn btn-success">回复</button>
             </div>
             </span>
             <hr>
             <input id="questionid" type="hidden" name="id" th:value="${question.id}">
-            <input id="commentor" type="hidden" name="commentor" th:value="${session.user.id}">
+            <input id="commentor" type="hidden" name="commentor" th:if="${session.user!=null}" th:value="${session.user.id}">
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+        <div  class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
             <div class="list-group">
                 <h4><span class="glyphicon glyphicon-user" aria-hidden="true">发起人</span></h4>
                 <span>
@@ -142,6 +159,15 @@
                     </span>
                 </span>
                 <hr>
+                <!--相关问题-->
+                <span>
+                    <h4><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>相关问题：</h4>
+                    <span th:if="${session.similequestion!=null}" th:each="squestion : ${session.similequestion}">
+                        <div style="margin-left: 10px">
+                            <h5><a th:text="${squestion.title}" th:href="@{'/question/'+${squestion.id}}"></a></h5>
+                        </div>
+                    </span>
+                </span>
             </div>
         </div>
     </div>

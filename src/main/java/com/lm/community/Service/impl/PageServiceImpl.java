@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("pageService")
 @Transactional
@@ -62,5 +65,36 @@ public class PageServiceImpl implements PageService {
     @Override
     public void updateViewCount(Integer id) {
         pageDao.updateViewCount(id);
+    }
+
+    @Override
+    public List<Question> findSimleQuestion(String[] tags, Integer id) {
+        Map<String,List<Question>> map = new HashMap<>();
+        List<Question> list = new ArrayList<>();
+        //开始查询与标签集合有关的问题
+        for(String tag : tags){
+            List<Question> simleQuestion = pageDao.findSimleQuestion(tag,id);
+            map.put(tag,simleQuestion);
+        }
+        //放进list集合，方便到前端处理
+        if(map!=null&&map.size()!=0){
+            for(List<Question> value : map.values()){
+                for(Question question1 : value){
+                    list.add(question1);
+                }
+            }
+        }
+
+        //去重
+        if(list!=null&&list.size()!=0){
+            for(int i = 0;i<=list.size()-1;i++){
+                for(int j = i+1;j<list.size();j++){
+                    if(list.get(i).getId().equals(list.get(j).getId())){
+                        list.remove(j);
+                    }
+                }
+            }
+        }
+        return list;
     }
 }

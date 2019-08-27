@@ -54,7 +54,7 @@ public class UserController {
         token.setState(state);
         String accessToken = githubUtils.getAccessToken(token);
         GithubUser user = githubUtils.getUser(accessToken);
-        if(user != null){
+        if(user.getName() != null && user.getAvatar_url()!=null){
             //用户信息存进数据库
             githubUserService.saveGithubUser(user);
             //把用户存进session

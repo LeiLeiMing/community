@@ -85,14 +85,9 @@ public class CommentController {
         recommentService.saveRecomment(recomment);
         //查询该评论id下的所有评论展示到前端
         List<Comment> comments = commentService.findAllCommentById(recomment.getQuestionid());
-        for(Comment comment : comments){
-            System.out.println("二级评论为:"+comment);
-        }
         //把comment放进Session
         request.getSession().setAttribute("comments",comments);
-        //尝试动态拼接
         map.put("message","success");
-        //map.put("ping",getAppendComment.getCommentString());
         return map;
     }
 }

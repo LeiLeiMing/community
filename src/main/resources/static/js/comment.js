@@ -79,6 +79,7 @@ function postrecomment(id) {
 
 function commentclick(id){
     //$("#"+id).toggle();
+    $('#type-'+id).css("color","blue");
     if($("#"+id).css('display')=='none'){
         $("#"+id).css("display","block");
     }else{

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public interface PageService {
 
@@ -15,4 +16,6 @@ public interface PageService {
     Question findQuestionById(Integer id);
 
     void updateViewCount(Integer id);
+
+    List<Question> findSimleQuestion(String[] tags,Integer id);
 }
