@@ -32,6 +32,10 @@ public class LaunchController {
     @PostMapping("/dolaunch")
     public String dolaunch(Question question,HttpServletRequest request){
         if(question!=null){
+            //设置一些数据的初始值
+            question.setLikecount(0);
+            question.setCommentcount(0);
+            question.setViewcount(0);
             //存进数据库
             launchService.saveQuestion(question,request);
             return "redirect:/";

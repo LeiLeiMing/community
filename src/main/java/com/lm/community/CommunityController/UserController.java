@@ -57,7 +57,7 @@ public class UserController {
         if(user != null){
             //用户信息存进数据库
             githubUserService.saveGithubUser(user);
-            //把用户的图片
+            //把用户存进session
             request.getSession().setAttribute("user",user);
             SaveSession session = new SaveSession();
             session.setTime(new Date());

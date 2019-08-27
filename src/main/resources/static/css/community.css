@@ -3,3 +3,10 @@
     font-weight: normal;
     color: #999;
 }
+
+.comment-2{
+    border-left: solid 1px #999;
+    margin-left: 40px;
+    margin-top: 25px;
+    margin-right: 20px;
+}

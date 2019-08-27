@@ -70,4 +70,13 @@ public interface LaunchDao {
 
     @Select("select count(1) from question")
     Integer findAllQuestionCount();
+
+    /**
+     * 更新评论数
+     */
+    @Update("update  question set commentcount =  commentcount + 1 where id = #{id}")
+    void updateCommentCount(@Param(value = "id") Integer id);
+
+    @Select("select count(1) from comment where questionid = #{id}")
+    Integer findAllCommentById(Integer id);
 }

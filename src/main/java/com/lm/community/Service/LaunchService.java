@@ -12,4 +12,9 @@ public interface LaunchService {
     List<Question> findAllQuestion();
 
     List<Question> findAllQuestionByLimi(Integer page,Integer size, Model model);
+
+    void updateCommentCount(Integer id);
+
+    Integer findAllCommentById(Integer id);
+
 }

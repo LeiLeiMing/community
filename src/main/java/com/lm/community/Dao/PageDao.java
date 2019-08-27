@@ -28,4 +28,11 @@ public interface PageDao {
                     many = @Many(select = "com.lm.community.Dao.SaveSessionDao.findUserById",fetchType = FetchType.DEFAULT)),
     })
     Question findQuestionById(Integer id);
+
+    /**
+     * 阅读次数
+     * @param id
+     */
+    @Update("update question set viewcount = viewcount + 1 where id = #{id}")
+    void updateViewCount(Integer id);
 }

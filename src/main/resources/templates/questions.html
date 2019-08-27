@@ -7,32 +7,126 @@
     <link rel="stylesheet" href="/css/community.css">
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/comment.js"></script>
 </head>
 <body style="background: #efefef">
 <div>
     <div th:insert="~{header :: header}"></div>
     <div class="container" style="background: white">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white;height: 100%">
-            <h4 th:text="${question.title}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></h4>
-            <span class="text-desc"><span class="label label-default" th:text="${question.tag}"></span></span>|
-                        作者：<span class="text-desc"><a th:text="${question.username}"></a></span>
-                        |发布于：<span class="text-desc" th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span>
-                        |阅读数：<span class="text-desc" th:text="${question.viewcount}"></span>
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
+            <h3 th:text="${question.title}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></h3>
+            <span class="text-desc"><span class="label label-default" th:text="${question.tag}"></span></span>
+                        <span class="text-desc"> | 作者：<a th:text="${question.username}"></a></span>
+                        <span class="text-desc"> | 发布于<span  th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span></span>
+                        <span  class="text-desc" > | 阅读数：<span th:text="${question.viewcount}"></span></span>
             </span>
             <hr>
             <h5><span th:text="${question.desction}"></span></h5>
             <hr>
             <span  class="text-desc">
                 <span th:text="${#dates.format(question.createtime,'yyyy-MM-dd')}"></span>
-                <span>
-                    <span class=" glyphicon glyphicon-comment " aria-hidden="true"></span>
-                    <a th:href="@{'/edit/'+${question.id}}">添加评论</a>
-                </span>
                 <span th:if="${session.user!=null&&session.user.getName()==question.username}">
                     <span class=" glyphicon glyphicon-edit " aria-hidden="true"></span>
                     <a th:href="@{'/edit/'+${question.id}}">编辑</a>
                 </span>
             </span>
+            <span  style="float: right;font-size: 25px;"><span id="like" onclick="like()" class=" glyphicon glyphicon-thumbs-up " aria-hidden="true"></span>
+                <span id="yes" style="display: none">谢谢!</span>
+                <span id="begin">赞一个</span>
+            </span>
+            <hr>
+            <span>
+                <h4>评论人数:<span th:text="${question.commentcount}"></span></h4>
+            </span>
+            <br>
+            <!--评论-->
+            <span id="commentpan" style="margin-top: 10px;margin-bottom: 10px">
+                <span th:if="${session.comments!=null}" th:each="comment : ${session.comments}">
+                    <span>
+                            <span class="media-left">
+                                <a href="#">
+                                    <img style="width: 35px;height: 35px" class="img-rounded" th:src="${comment.user.avatar_url}" alt="...">
+                                </a>
+                            </span>
+                            <span class="media-body">
+                                <span>
+                                    <h5 class="media-heading"><span th:text="${comment.user.name}"></span>：</h5>
+                                </span>
+                                <span th:text="${comment.comment}"></span>
+                            </span>
+                    </span>
+                    <span class="text-desc">
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp&nbsp&nbsp&nbsp
+                        <span th:onclick="|commentclick(${comment.id})|" class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                        <span ><span th:text="${comment.recommentcount}"></span></span>
+                        <span style="float: right;" th:text="${#dates.format(comment.commenttime,'yyyy-MM-dd hh:mm')}"></span>
+                    </span>
+
+                        <!--二级回复-->
+                        <div class="comment-2" th:id="${comment.id}" style="display: none">
+
+                                <div th:if="${comment.recomment!=null}" th:each="recomments : ${comment.recomment}" style="margin-bottom: 20px;margin-left: 20px;margin-top: 20px">
+                                    <span class="media-left">
+                                        <a href="#">
+                                            <img style="width: 35px;height: 35px;" class="img-rounded" th:src="${recomments.user.avatar_url}" alt="...">
+                                        </a>
+                                    </span>
+                                    <span class="media-body">
+                                        <span>
+                                            <h5 class="media-heading"><span th:text="${recomments.user.getName()}"></span>：</h5>
+                                        </span>
+                                        <span th:text="${recomments.recomment}"></span>
+                                    </span>
+                                    <span style="margin-left: 20px">
+                                        <span class="text-desc" style="float: right;" th:text="${#dates.format(recomments.recommenttime,'yyyy-MM-dd hh:mm')}"></span>
+                                    </span>
+                                </div>
+                            <hr>
+                            <div class="form-group" style="margin-bottom: 20px;margin-left: 20px;margin-top: 20px" >
+                                <!--当前评论的用户id-->
+                                <input th:id="'recommentor-'+${comment.id}" type="hidden"  th:value="${session.user.id}">
+                                <!--当前所回复的用户id-->
+                                <input th:id="'commentor-'+${comment.id}" type="hidden"  th:value="${comment.commentor}">
+                                <span class="form-group">
+                                    <input type="text" class="form-control" th:id="'recomment-'+${comment.id}" placeholder="输入回复内容">
+                                </span>
+                                 <!--<span><textarea  name="recomment"  class="form-control" rows="2" cols="20" placeholder="输入回复内容"></textarea></span>-->
+                                 <span>
+                                     <button th:onclick="|postrecomment(${comment.id})|" type="button" class="btn btn-success">回复</button>
+                                     <button th:onclick="|deletecomment(${comment.id})|" type="button" class="btn btn-default">取消</button>
+                                 </span>
+                            </div>
+
+                        </div>
+                        <!--/二级回复-->
+                    <hr>
+                    </span>
+                </span>
+            </span>
+            <!--/评论-->
+            <span>
+                <span><h4>当前用户:</h4></span>
+                <span class="media-left">
+                    <a href="#">
+                        <img style="width: 35px;height: 35px" class="img-rounded" th:src="${session.user.avatar_url}" alt="...">
+                    </a>
+                </span>
+                <span class="media-body">
+                    <h4 class="media-heading" style="margin-top: 7px" th:text="${session.user.name}"></h4>
+                </span>
+                 <div>
+                <div class="form-group">
+                    <textarea id="comment" class="form-control" rows="10" cols="20" name="comment" placeholder="说点什么吧"></textarea>
+                </div>
+            </div>
+            <div  class="form-group">
+                <button onclick="post()" style="float: right;margin-bottom: 20px;" type="button" class="btn btn-success">回复</button>
+            </div>
+            </span>
+            <hr>
+            <input id="questionid" type="hidden" name="id" th:value="${question.id}">
+            <input id="commentor" type="hidden" name="commentor" th:value="${session.user.id}">
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
             <div class="list-group">
@@ -44,7 +138,7 @@
                         </a>
                     </span>
                     <span class="media-body">
-                        <h4 class="media-heading" th:text="${question.username}"></h4>
+                        <h4 class="media-heading" style="margin-top: 7px" th:text="${question.username}"></h4>
                     </span>
                 </span>
                 <hr>

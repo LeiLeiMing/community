@@ -13,4 +13,6 @@ public interface PageService {
     List<Question> findQuestionByUserId(Integer page,Integer size, Model model,HttpServletRequest request);
 
     Question findQuestionById(Integer id);
+
+    void updateViewCount(Integer id);
 }

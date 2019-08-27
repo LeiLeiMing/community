@@ -9,6 +9,15 @@
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body style="background: #efefef">
+<script>
+    window.onload=function () {
+        var a = window.localStorage.getItem("closeable");
+        if (a == "true"){
+            window.close();
+            window.localStorage.removeItem("closeable");
+        }
+    }
+</script>
 <div>
     <div th:insert="~{header :: header}"></div>
     <div class="container" style="background: white">

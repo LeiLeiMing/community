@@ -8,12 +8,14 @@ import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service("pageService")
+@Transactional
 public class PageServiceImpl implements PageService {
 
     @Autowired
@@ -55,5 +57,10 @@ public class PageServiceImpl implements PageService {
     @Override
     public Question findQuestionById(Integer id) {
         return pageDao.findQuestionById(id);
+    }
+
+    @Override
+    public void updateViewCount(Integer id) {
+        pageDao.updateViewCount(id);
     }
 }

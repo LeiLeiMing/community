@@ -5,12 +5,14 @@ import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service("loginService")
+@Transactional
 public class LoginServiceImpl implements LoginService {
 
     @Autowired

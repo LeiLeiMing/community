@@ -25,7 +25,7 @@ public class ProfileController {
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action")String action, Model model, HttpServletRequest request,
-             @RequestParam(name = "page",defaultValue = "1")Integer page, @RequestParam(name = "size",defaultValue = "1")Integer size){
+             @RequestParam(name = "page",defaultValue = "1")Integer page, @RequestParam(name = "size",defaultValue = "5")Integer size){
         //登录判断
         if(loginService.checkCookie(request)==null){
             model.addAttribute("error","未登录");
