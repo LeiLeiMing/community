@@ -97,3 +97,64 @@ function deletecomment(id) {
     $("#recomment-"+id).val("");
 }
 
+function btn() {
+     window.location.href="https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://localhost:8080/callback&scope=user&state=1";
+}
+
+
+$(function(){
+    $('#sub').attr('disabled',true);
+});
+
+function titleonblus(){
+    //获取文本框内容
+    var title = $('#title').val();
+    var desc = $('#desc').val();
+    var tag = $('#tag').val();
+    if (title==''){
+        $('#ntitle').show();
+        $('#sub').attr('disabled',true);
+    }else{
+        $('#ntitle').hide();
+        if (title!=''&&desc!=''&&tag!=''){
+            $('#sub').attr('disabled',false);
+        }
+    }
+}
+function desconblus(){
+    //获取文本框内容
+    var title = $('#title').val();
+    var desc = $('#desc').val();
+    var tag = $('#tag').val();
+    if (desc==''){
+        $('#ndesc').show();
+        $('#sub').attr('disabled',true);
+    }else{
+        $('#ndesc').hide();
+        if (title!=''&&desc!=''&&tag!=''){
+            $('#sub').attr('disabled',false);
+        }
+
+    }
+}
+function tagonblus(){
+    //获取文本框内容
+    var title = $('#title').val();
+    var desc = $('#desc').val();
+    var tag = $('#tag').val();
+    if (tag==''){
+        $('#ntag').show();
+        $('#sub').attr('disabled',true);
+    }else{
+        $('#ntag').hide();
+        if (title!=''&&desc!=''&&tag!=''){
+            $('#sub').attr('disabled',false);
+        }
+    }
+}
+
+
+function cancel(id) {
+    //重新发送请求,目的是为了清空模态框
+    window.location.href = "/question/"+id;
+}

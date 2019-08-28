@@ -18,4 +18,6 @@ public interface PageService {
     void updateViewCount(Integer id);
 
     List<Question> findSimleQuestion(String[] tags,Integer id);
+
+    void editQuestionById(Question question);
 }

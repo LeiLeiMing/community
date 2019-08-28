@@ -22,6 +22,7 @@ public interface CommentDao {
             @Result(property = "commentor",column = "commentor"),
             @Result(property = "commenttime",column = "commenttime"),
             @Result(property = "commentcount",column = "commentcount"),
+            @Result(property = "read",column = "read"),
             @Result(property = "user",column = "commentor",
                     one = @One(select = "com.lm.community.Dao.SaveSessionDao.findCommentorById",fetchType = FetchType.DEFAULT)),
             @Result(property = "recomment",column = "id",
@@ -38,5 +39,36 @@ public interface CommentDao {
      */
     @Select("select count(1) from comment where questionid = #{id}")
     Integer findAllCommentCount(Integer id);
+
+    /**
+     * 查询所有未读评论，不包括二级评论
+     * @return
+     */
+    @Select(" select * from comment where comment.read=1 and questionid  IN \n" +
+            "\t (select id from question where author  in (select id from savesession where name = #{name}) )\n" +
+            "\t and commentor not in (select id from savesession where name =#{name})")
+    @Results(id = "norreadcomment", value = {
+            @Result(id = true,property = "id",column = "id"),
+            @Result(property = "questionid",column = "questionid"),
+            @Result(property = "comment",column = "comment"),
+            @Result(property = "commentor",column = "commentor"),
+            @Result(property = "commenttime",column = "commenttime"),
+            @Result(property = "commentcount",column = "commentcount"),
+            @Result(property = "read",column = "read"),
+            @Result(property = "user",column = "commentor",
+                    one = @One(select = "com.lm.community.Dao.SaveSessionDao.findCommentorById",fetchType = FetchType.DEFAULT)),
+            @Result(property = "recommentcount",column = "id",
+                    one = @One(select = "com.lm.community.Dao.RecommentDao.findAllRecommentCount",fetchType = FetchType.DEFAULT)),
+    })
+    List<Comment> findAllNotReadComment(String name);
+
+    /**
+     * 查询所有未读一级评论总数
+     * @return
+     */
+    @Select(" select count(1) from comment where comment.read=1 and questionid  IN \n" +
+            "\t (select id from question where author  in (select id from savesession where name =#{name}) )\n" +
+            "\t and commentor not in (select id from savesession where name = #{name})")
+    Integer finsAllNotReadCommentCount(String name);
 
 }

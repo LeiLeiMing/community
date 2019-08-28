@@ -97,4 +97,9 @@ public class PageServiceImpl implements PageService {
         }
         return list;
     }
+
+    @Override
+    public void editQuestionById(Question question) {
+        pageDao.editQuestionById(question);
+    }
 }

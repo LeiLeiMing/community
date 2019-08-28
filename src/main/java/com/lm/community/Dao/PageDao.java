@@ -60,4 +60,11 @@ public interface PageDao {
                     many = @Many(select = "com.lm.community.Dao.SaveSessionDao.findUserById",fetchType = FetchType.DEFAULT)),
     })
     List<Question> findSimleQuestion(String tag,Integer id);
+
+    /**
+     * 保存编辑好的问题
+     * @param question
+     */
+    @Update("update question set title = #{title},desction = #{desction},tag = #{tag} where id = #{id}")
+    void editQuestionById(Question question);
 }

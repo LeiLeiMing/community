@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/community.css">
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/comment.js"></script>
 </head>
 <body style="background: #efefef;">
 <script>
@@ -21,11 +22,10 @@
 <div>
     <div th:insert="~{header :: header}"></div>
     <div class="container" style="background: white">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white;height: 100%">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white;">
             <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
             <hr>
-            <div class="media" th:each="question : ${allquestion}">
-                <span style="margin-top: 20px">
+            <div  style="margin-top: 30px"  class="media" th:each="question : ${allquestion}">
                 <span class="media-left">
                     <a href="#">
                         <img style="width: 40px;height: 40px" class="img-rounded" th:src="${question.saveSession.avatar_url}" alt="...">
@@ -39,7 +39,6 @@
                         <span th:text="${question.viewcount}"></span>次浏览 .<span th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span>
                     </span>
                 </span>
-                    </span>
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
@@ -64,6 +63,32 @@
 
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
             <h3><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>热门话题</h3>
+        </div>
+
+        <!--模态框-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div style="margin-left: 200px;">
+                            <span><h4>使用github账号登录</h4></span>
+                            <div>
+                                <img src="/img/1109058.gif" height="128" width="128"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button id="btn" onclick="btn()" type="button" class="btn btn-primary">
+                            确定
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
