@@ -11,6 +11,10 @@ public interface CommentService {
 
     List<Comment> findAllCommentById(Integer id);
 
+    void markReadComment(Integer id);
+
+
+
 
 
 }

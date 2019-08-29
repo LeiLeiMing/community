@@ -12,54 +12,173 @@
 <div style="background: #efefef">
     <div th:insert="~{header :: header}"></div>
     <div class="container" style="background: white">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white;height: 100%">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white;">
             <h3 th:text="${prifiletitle}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></h3>
-            <hr> <div class="media" th:each="question : ${allquestion}">
-            <div class="media-left">
-                <a href="#">
-                    <img style="width: 40px;height: 40px" class="img-rounded" th:src="${question.saveSession.avatar_url}" alt="...">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">
-                    <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
-                </h4>
-                <h5 class="text-desc" th:text="${question.desction}"></h5>
-                <span class="text-desc"><span th:text="${question.commentcount}"></span>个回复 .
-                        <span th:text="${question.viewcount}"></span>次浏览 .
-                            <span th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span></span>
-            </div>
             <hr>
-        </div>
-            <nav aria-label="Page navigation" th:if="${key=='questions'}">
-                <ul class="pagination">
-                    <li th:if="${pages.haveFirstPage}">
-                        <a th:href="@{/profile/questions/(page=1)}" aria-label="Previous">
-                            <span aria-hidden="true">首页</span>
+            <!--我的提问-->
+            <div th:if="${key=='questions'}" >
+                <div class="media" th:each="question : ${allquestion}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img style="width: 40px;height: 40px" class="img-rounded" th:src="${question.saveSession.avatar_url}" alt="...">
                         </a>
-                    </li>
-                    <li th:if="${pages.havePrePage}"><a th:href="@{/profile/questions/(page=${pages.page-1})}">上页</a></li>
-                    <li th:each="page : ${pages.pages}" th:class="${pages.page==page}?'active' : ''">
-                        <a th:href="@{/profile/questions/(page=${page})}" th:text="${page}"></a>
-                    </li>
-                    <li th:if="${pages.haveNextPage}"><a th:href="@{/profile/questions/(page=${pages.page+1})}">下页</a></li>
-                    <li th:if="${pages.haveEndPage}">
-                        <a th:href="@{/profile/questions/(page=${pages.countsize})}" aria-label="Next">
-                            <span aria-hidden="true">尾页</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                        </h4>
+                        <h5 class="text-desc" th:text="${question.desction}"></h5>
+                        <span class="text-desc"><span th:text="${question.commentcount}"></span>个回复 .
+                            <span th:text="${question.viewcount}"></span>次浏览 .
+                            <span th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span>
+                        </span>
+                    </div>
+                </div>
+                <!--分页栏-->
+                <nav aria-label="Page navigation" th:if="${key=='questions'}">
+                    <ul class="pagination">
+                        <li th:if="${pages.haveFirstPage}">
+                            <a th:href="@{/profile/questions/(page=1)}" aria-label="Previous">
+                                <span aria-hidden="true">首页</span>
+                            </a>
+                        </li>
+                        <li th:if="${pages.havePrePage}"><a th:href="@{/profile/questions/(page=${pages.page-1})}">上页</a></li>
+                        <li th:each="page : ${pages.pages}" th:class="${pages.page==page}?'active' : ''">
+                            <a th:href="@{/profile/questions/(page=${page})}" th:text="${page}"></a>
+                        </li>
+                        <li th:if="${pages.haveNextPage}"><a th:href="@{/profile/questions/(page=${pages.page+1})}">下页</a></li>
+                        <li th:if="${pages.haveEndPage}">
+                            <a th:href="@{/profile/questions/(page=${pages.countsize})}" aria-label="Next">
+                                <span aria-hidden="true">尾页</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!--收到的回复-->
+           <div th:if="${key=='remessage'}">
+               <!--一级回复-->
+               <div class="media" th:if="${notreadcomment!=null}" th:each="comment : ${notreadcomment}">
+                   <!--已读样式-->
+                   <div th:if="${comment.read==0}" class="text-desc" >
+                       <div class="media-left">
+                           <a href="#">
+                               <img style="width: 40px;height: 40px" class="img-rounded" th:if="${comment.user.avatar_url!=null}" th:src="${comment.user.avatar_url}" alt="...">
+                           </a>
+                       </div>
+                       <div class="media-body">
+                           <h5 class="media-heading" >
+                               <span th:text="${comment.user.name}"></span>
+                               在
+                               <a th:href="@{'/question/'+${comment.questionid}}" th:text="${comment.question.title}"></a>
+                               中回复了:
+                               <!--删除该评论-->
+                               <span style="float: right;">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                   <span  class="text-desc"><a href="#">删除</a></span>
+                               </span>
+                           </h5>
+                           <h5><span th:text="${comment.comment}"></span></h5>
+                           <span style="float: right" th:text="${#dates.format(comment.commenttime,'yyyy-MM-dd hh:mm')}"></span>
+                           <hr>
+                       </div>
+                   </div>
+                   <!--未读样式-->
+                   <div th:if="${comment.read==1}" >
+                       <div class="media-left">
+                           <a href="#">
+                               <img style="width: 40px;height: 40px" class="img-rounded" th:if="${comment.user.avatar_url!=null}" th:src="${comment.user.avatar_url}" alt="...">
+                           </a>
+                       </div>
+                       <div class="media-body">
+                           <h5 class="media-heading" >
+                               <span th:text="${comment.user.name}"></span>
+                               在
+                               <a th:href="@{'/question/'+${comment.questionid}}" th:text="${comment.question.title}"></a>
+                               中回复了:
+                               <!--标为已读1-->
+                               <span style="float: right;">
+                                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                                   <span  class="text-desc"><a th:href="@{'/comment/'+${comment.id}}">标为已读</a></span>
+                               </span>
+                               <!--删除该评论-->
+                               <span style="float: right;margin-right: 10px">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                   <span  class="text-desc"><a href="#">删除</a></span>
+                               </span>
+                           </h5>
+                           <h5><span th:text="${comment.comment}"></span></h5>
+                           <span style="float: right" th:text="${#dates.format(comment.commenttime,'yyyy-MM-dd hh:mm')}"></span>
+                           <hr>
+                       </div>
+                   </div>
+               </div>
+               <!--二级回复-->
+               <div class="media" th:if="${notreadrecomment!=null}" th:each="recomment : ${notreadrecomment}">
+                   <!--已读样式-->
+                   <div class="text-desc" th:if="${recomment.read==0}">
+                       <div class="media-left">
+                           <a href="#">
+                               <img style="width: 40px;height: 40px" class="img-rounded" th:src="${recomment.user.avatar_url}" alt="...">
+                           </a>
+                       </div>
+                       <div class="media-body">
+                           <h5 class="media-heading" >
+                               <span th:text="${recomment.user.name}"></span>
+                               在
+                               <a th:href="@{'/question/'+${recomment.questionid}}" th:text="${recomment.question.title}"></a>
+                               中回复了:
+                               <!--删除该评论-->
+                               <span style="float: right;">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                   <span  class="text-desc"><a href="#">删除</a></span>
+                               </span>
+                           </h5>
+                           <h5><span th:text="${recomment.recomment}"></span></h5>
+                           <span style="float: right" th:text="${#dates.format(recomment.recommenttime,'yyyy-MM-dd hh:mm')}"></span>
+                           <hr>
+                       </div>
+                   </div>
+                   <!--未读样式-->
+                   <div  th:if="${recomment.read==1}">
+                       <div class="media-left">
+                           <a href="#">
+                               <img style="width: 40px;height: 40px" class="img-rounded" th:src="${recomment.user.avatar_url}" alt="...">
+                           </a>
+                       </div>
+                       <div class="media-body">
+                           <h5 class="media-heading" >
+                               <span th:text="${recomment.user.name}"></span>
+                               在
+                               <a  th:href="@{'/question/'+${recomment.questionid}}" th:text="${recomment.question.title}"></a>
+                               中回复了:
+                               <!--标为已读1-->
+                               <span style="float: right;">
+                                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                                   <span  class="text-desc"><a th:href="@{'/recomment/'+${recomment.id}}">标为已读</a></span>
+                               </span>
+                               <!--删除该评论-->
+                               <span style="float: right;margin-right: 10px">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                   <span  class="text-desc"><a href="#">删除</a></span>
+                               </span>
+                           </h5>
+                           <h5><span th:text="${recomment.recomment}"></span></h5>
+                           <span style="float: right" th:text="${#dates.format(recomment.recommenttime,'yyyy-MM-dd hh:mm')}"></span>
+                           <hr>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        <!--右侧栏-->
         </div>
-
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
             <div class="list-group">
                 <a href="/profile/questions" th:class="${questions=='questions'}?'list-group-item active ':'list-group-item'">
                     我的提问
                 </a>
                 <a href="/profile/remessage" th:class="${remessages=='remessages'}?'list-group-item active':'list-group-item'">
-                    <span class="badge">14</span>
+                    <span class="badge" style="float: right;background-color: red" th:text="${session.allnotreadcount}"></span>
                     收到的回复
                 </a>
             </div>

@@ -10,10 +10,7 @@ import com.lm.community.Utils.getAppendComment;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,5 +86,27 @@ public class CommentController {
         request.getSession().setAttribute("comments",comments);
         map.put("message","success");
         return map;
+    }
+
+    /**
+     * 把一级评论标为已读
+     * @param id
+     * @return
+     */
+    @GetMapping("/comment/{id}")
+    public String markReadComment(@PathVariable(name="id")Integer id){
+        commentService.markReadComment(id);
+        return "redirect:/profile/remessage";
+    }
+
+    /**
+     * 把二级评论标为已读
+     * @param id
+     * @return
+     */
+    @GetMapping("/recomment/{id}")
+    public String markReadReComment(@PathVariable(name="id")Integer id){
+        recommentService.markReadRecomment(id);
+        return "redirect:/profile/remessage";
     }
 }

@@ -35,6 +35,11 @@ public class CommentServiceImpl implements CommentService {
         return commentDao.findAllCommentById(id);
     }
 
+    @Override
+    public void markReadComment(Integer id) {
+        commentDao.markReadComment(id);
+    }
+
 
 
 

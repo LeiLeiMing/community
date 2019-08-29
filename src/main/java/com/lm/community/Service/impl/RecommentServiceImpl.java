@@ -27,4 +27,13 @@ public class RecommentServiceImpl implements RecommentService {
     public void saveRecomment(Recomment recomment) {
         recommentDao.saveRecomment(recomment);
     }
+
+    /**
+     * 二级评论标为已读
+     * @param id
+     */
+    @Override
+    public void markReadRecomment(Integer id) {
+        recommentDao.markReadRecomment(id);
+    }
 }

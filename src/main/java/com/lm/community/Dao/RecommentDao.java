@@ -39,7 +39,7 @@ public interface RecommentDao {
      * 查询所有未读二级评论总数
      * @return
      */
-    @Select("\tselect count(1) from recomment where recomment.read=1 and questionid  IN \n" +
+    @Select("\tselect count(1) from recomment where recomment.read = 1 and  questionid  IN \n" +
             "\t (select id from question where author  in (select id from savesession where name = #{name}) )\n" +
             "\t and recommentor not in (select id from savesession where name = #{name})")
     Integer findAllNotReadRecomment(String name);
@@ -49,7 +49,7 @@ public interface RecommentDao {
      * @param name
      * @return
      */
-    @Select("select * from recomment where recomment.read=1 and questionid  IN \n" +
+    @Select("select * from recomment where   questionid  IN \n" +
             "\t (select id from question where author  in (select id from savesession where name = #{name}) )\n" +
             "\t and recommentor not in (select id from savesession where name = #{name})")
     @Results(id = "notreadrecomment", value = {
@@ -63,6 +63,15 @@ public interface RecommentDao {
             @Result(property = "read",column = "read"),
             @Result(property = "user",column = "recommentor",
                     one = @One(select = "com.lm.community.Dao.SaveSessionDao.findCommentorById",fetchType = FetchType.DEFAULT)),
+            @Result(property = "question",column = "questionid",
+                    one = @One(select = "com.lm.community.Dao.PageDao.findQuestionById",fetchType = FetchType.DEFAULT)),
     })
     List<Recomment> findAllNotRecommentCount(String name);
+
+    /**
+     * 二级评论标为已读
+     * @param id
+     */
+    @Update("update recomment set recomment.read = 0 where id =#{id}")
+    void markReadRecomment(Integer id);
 }

@@ -44,7 +44,7 @@ public interface CommentDao {
      * 查询所有未读评论，不包括二级评论
      * @return
      */
-    @Select(" select * from comment where comment.read=1 and questionid  IN \n" +
+    @Select(" select * from comment where  questionid  IN \n" +
             "\t (select id from question where author  in (select id from savesession where name = #{name}) )\n" +
             "\t and commentor not in (select id from savesession where name =#{name})")
     @Results(id = "norreadcomment", value = {
@@ -59,6 +59,8 @@ public interface CommentDao {
                     one = @One(select = "com.lm.community.Dao.SaveSessionDao.findCommentorById",fetchType = FetchType.DEFAULT)),
             @Result(property = "recommentcount",column = "id",
                     one = @One(select = "com.lm.community.Dao.RecommentDao.findAllRecommentCount",fetchType = FetchType.DEFAULT)),
+            @Result(property = "question",column = "questionid",
+                    one = @One(select = "com.lm.community.Dao.PageDao.findQuestionById",fetchType = FetchType.DEFAULT)),
     })
     List<Comment> findAllNotReadComment(String name);
 
@@ -66,9 +68,16 @@ public interface CommentDao {
      * 查询所有未读一级评论总数
      * @return
      */
-    @Select(" select count(1) from comment where comment.read=1 and questionid  IN \n" +
+    @Select(" select count(1) from comment where comment.read=1 and  questionid  IN \n" +
             "\t (select id from question where author  in (select id from savesession where name =#{name}) )\n" +
             "\t and commentor not in (select id from savesession where name = #{name})")
     Integer finsAllNotReadCommentCount(String name);
+
+    /**
+     * 把一级评论标为已读
+     * @param id
+     */
+    @Update("update comment set comment.read = 0 where id = #{id} ")
+    void markReadComment(Integer id);
 
 }

@@ -17,6 +17,8 @@ public class Comment {
 
     private SaveSession user;
 
+    private Question question;//回复所在的文章
+
 
     //该条评论下有哪些评论
     //一对多

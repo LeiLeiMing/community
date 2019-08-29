@@ -8,4 +8,6 @@ public interface RecommentService {
 
     void saveRecomment(Recomment recomment);
 
+    void markReadRecomment(Integer id);
+
 }
