@@ -32,7 +32,7 @@ public interface LaunchDao {
     })
     List<Question> findAllQuestion();
 
-    @Select("select * from question limit #{page},#{size}")
+    @Select("select * from question  order by id desc limit #{page},#{size}")
     @Results(id = "limitquestion", value = {
             @Result(id = true,property = "id",column = "id"),
             @Result(property = "desction",column = "desction"),
@@ -50,7 +50,7 @@ public interface LaunchDao {
     })
     List<Question> findAllQuestionByLimi(@Param(value = "page")Integer page,@Param(value = "size")Integer size);
 
-    @Select("select * from question where username = #{username} limit #{page},#{size} ")
+    @Select("select * from question  where  username = #{username} order by id desc  limit #{page},#{size} ")
     @Results(id = "limitquestionbyname", value = {
             @Result(id = true,property = "id",column = "id"),
             @Result(property = "desction",column = "desction"),

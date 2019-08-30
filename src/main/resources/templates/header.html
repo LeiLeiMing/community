@@ -8,8 +8,9 @@
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/comment.js"></script>
+
 </head>
-<body>
+<body >
 <div th:fragment="header">
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -21,8 +22,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">知秋论坛</a>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>发现</a>
+            <a class="navbar-brand" href="#"><span ></span>关于站点</a>
         </div>
-
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left">
@@ -43,7 +45,9 @@
                         <li><a href="#"><span>系统通知</span><span class="badge" style="background-color: red;float: right"></span></a></li>
                     </ul>
                 </li>
-                <li th:if="${session.user!=null}"><a href="/launch">发布问题</a></li>
+                <li th:if="${session.user!=null}">
+                    <a href="/launch"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发布问题</a>
+                </li>
                 <li th:if="${session.user==null}">
                     <!--<a href="https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>-->
                     <a data-toggle="modal" data-target="#myModal">登录</a>
@@ -61,6 +65,7 @@
             </ul>
         </div>
     </div>
+
 </nav>
 </div>
 </body>

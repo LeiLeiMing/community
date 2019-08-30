@@ -102,4 +102,22 @@ public class PageServiceImpl implements PageService {
     public void editQuestionById(Question question) {
         pageDao.editQuestionById(question);
     }
+
+    /**
+     * 热门问题
+     * @return
+     */
+    @Override
+    public List<Question> findHostQuestions() {
+        return pageDao.findHostQuestions();
+    }
+
+    /**
+     * 最新问题
+     * @return
+     */
+    @Override
+    public List<Question> findNewQuestion() {
+        return pageDao.findNewQuestion();
+    }
 }

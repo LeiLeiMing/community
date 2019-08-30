@@ -1,6 +1,8 @@
 package com.lm.community.CommunityController;
 
 import com.lm.community.Domain.Question;
+import com.lm.community.Domain.SaveSession;
+import com.lm.community.Service.IndexService;
 import com.lm.community.Service.LaunchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,17 @@ public class LaunchController {
 
     @Autowired
     private LaunchService launchService;
+    @Autowired
+    private IndexService indexService;
 
     @GetMapping("/launch")
     public String launch(HttpServletRequest request){
         //判断用户是否登录
-        Object user = request.getSession().getAttribute("user");
+        SaveSession user = (SaveSession) request.getSession().getAttribute("user");
         if(user!=null){
+            //查询所有未（总）读评论数量
+            Integer allNotReadCount = indexService.findAllNotReadCount(user.getName());
+            request.getSession().setAttribute("allnotreadcount",allNotReadCount);
             return "/launch";
         }
         return "redirect:/";

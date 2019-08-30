@@ -3,6 +3,7 @@
 <head>
     <title>知秋论坛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/editormd.css">
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/community.css">
     <link rel="stylesheet" href="/css/editormd.preview.min.css">
@@ -12,6 +13,7 @@
     <script src="/js/editormd.min.js"></script>
     <script src="/js/lib/marked.min.js"></script>
     <script src="/js/lib/prettify.min.js"></script>
+    <script src="/js/plugins/image-dialog/image-dialog.js" type="application/javascript"></script>
 
 </head>
 <body style="background: #efefef">
@@ -42,7 +44,7 @@
                 <span th:text="${#dates.format(question.createtime,'yyyy-MM-dd')}"></span>
                 <span th:if="${session.user!=null&&session.user.getName()==question.username}">
                     <span class=" glyphicon glyphicon-edit " aria-hidden="true"></span>
-                    <a class="text-desc"  data-toggle="modal" data-target="#myModal">编辑</a>
+                    <a class="text-desc"  data-toggle="modal" data-target="#myModal-editor">编辑</a>
                     <!--// th:href="@{'/edit/'+${question.id}}-->
                 </span>
             </span>
@@ -143,11 +145,11 @@
                  <span th:if="${session.user==null}">
                     <span class="media-left">
                         <a href="#">
-                            <img style="width: 35px;height: 35px" class="img-rounded"  alt="...">
+                            <img style="width: 35px;height: 35px" class="img-rounded" src="/img/用户.png"  alt="...">
                         </a>
                     </span>
                     <span class="media-body">
-                        <h4 class="media-heading" style="margin-top: 7px">尚未登录</h4>
+                        <h4 class="media-heading" style="margin-top: 7px" >匿名用户</h4>
                     </span>
                 </span>
                 <div class="form-group">
@@ -178,6 +180,7 @@
                 <!--相关问题-->
                 <span>
                     <h4><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>相关问题：</h4>
+                    <hr>
                     <span th:if="${session.similequestion!=null}" th:each="squestion : ${session.similequestion}">
                         <div style="margin-left: 10px">
                             <h5><a th:text="${squestion.title}" th:href="@{'/question/'+${squestion.id}}"></a></h5>
@@ -189,7 +192,7 @@
     </div>
 
     <!--编辑的模态窗口-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal-editor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -202,10 +205,28 @@
                         <label >问题标题（简单扼要）:<font id="ntitle" style="display: none;" color="red">*标题不能为空</font></label>
                         <input id="title" onblur="titleonblus()" type="text" class="form-control" name="title" th:value="${question.title}">
                     </div>
-                    <div class="form-group">
-                        <label >问题描述（必填）<font id="ndesc" style="display: none;" color="red">*问题描述不能为空</font></label>
-                        <textarea id="desc" onblur="desconblus()" class="form-control" rows="10" cols="30" name="desction" th:text="${question.desction}"></textarea>
+                    <div>
+                        <label >问题描述（必填，请参照右侧提示）<font id="ndesc" style="display: none;" color="red">*问题描述不能为空</font></label>
                     </div>
+                    <div class="form-group" id="question-desc">
+                        <textarea id="desc" onblur="desconblus()" class="form-control" rows="10" cols="30" name="desction" style="display:none;"></textarea>
+                    </div>
+                    <script type="text/javascript">
+                        $(function() {
+                            var editor = editormd("question-desc", {
+                                width  : "100%",
+                                height : 350,
+                                path   : "/js/lib/",
+                                delay  :  0,
+                                watch  :  false,
+                                placeholder : "输入问题描述",
+                                imageUpload: true,
+                                imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                                imageUploadURL : "/file/upload",
+
+                            });
+                        });
+                    </script>
                     <div class="form-group">
                         <label >添加标签（标签以空格分隔，每个标签字数不超过10个）:<font id="ntag" style="display: none;" color="red">*标签不能为空</font></label>
                         <input id="tag" onblur="tagonblus()" style="width: 40%" type="text" class="form-control" name="tag" th:value="${question.tag}">
@@ -216,6 +237,31 @@
                     <button id="sub" style="float: right;margin-bottom: 20px;" type="submit" class="btn btn-success">编辑</button>
                 </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!--模态框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-left: 200px;">
+                        <span><h4>使用github账号登录</h4></span>
+                        <div>
+                            <img src="/img/1109058.gif" height="128" width="128"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="btn" onclick="btn()" type="button" class="btn btn-primary">
+                        确定
+                    </button>
+                </div>
             </div>
         </div>
     </div>

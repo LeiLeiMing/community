@@ -46,7 +46,7 @@ public interface CommentDao {
      */
     @Select(" select * from comment where  questionid  IN \n" +
             "\t (select id from question where author  in (select id from savesession where name = #{name}) )\n" +
-            "\t and commentor not in (select id from savesession where name =#{name})")
+            "\t and commentor not in (select id from savesession where name =#{name}) order by id desc")
     @Results(id = "norreadcomment", value = {
             @Result(id = true,property = "id",column = "id"),
             @Result(property = "questionid",column = "questionid"),

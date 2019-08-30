@@ -21,7 +21,7 @@
 </script>
 <div>
     <div th:insert="~{header :: header}"></div>
-    <div class="container" style="background: white">
+    <div class="container" style="background:  white">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white;">
             <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
             <hr>
@@ -35,7 +35,9 @@
                     <h4 class="media-heading">
                         <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
                     </h4>
-                    <span class="text-desc"><span th:text="${question.commentcount}"></span>个回复 .
+                    <span class="text-desc">
+                        <span th:text="${question.username}"></span> .
+                        <span th:text="${question.commentcount}"></span>个回复 .
                         <span th:text="${question.viewcount}"></span>次浏览 .<span th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span>
                     </span>
                 </span>
@@ -60,33 +62,70 @@
                 </ul>
             </nav>
         </div>
-
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
-            <h3><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>热门话题</h3>
-        </div>
-
-        <!--模态框-->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="margin-top:18px;border-left: 1px solid #eee">
+            <h4><span class="glyphicon glyphicon-leaf" aria-hidden="true">一叶知秋</span></h4>
+            <hr>
+            <!--轮播图-->
+            <span>
+                <div  id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators -->
+                    <!-- Wrapper for slides -->
+                  <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                      <img src="/img/background2.jpg" alt="...">
                     </div>
-                    <div class="modal-body">
-                        <div style="margin-left: 200px;">
-                            <span><h4>使用github账号登录</h4></span>
-                            <div>
-                                <img src="/img/1109058.gif" height="128" width="128"/>
-                            </div>
+                    <div class="item">
+                      <img src="/img/background2.jpg" alt="...">
+                    </div>
+                  </div>
+                </div>
+            </span>
+            <!--/轮播图-->
+            <hr>
+            <h4><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>热门</h4>
+            <hr>
+            <span>
+                <div th:if="${session.host!=null}" th:each="hostquestion : ${session.host}">
+                    <div>
+                        <span><h5><a th:text="${hostquestion.title}" th:href="@{'/question/'+${hostquestion.id}}"></a></h5></span>
+                        <span style="float: right;" class="text-desc"><span th:text="${hostquestion.viewcount}"></span>次阅读</span>
+                    </div>
+                </div>
+            </span>
+            <hr>
+            <h4><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>最新</h4>
+            <hr>
+            <span>
+                <div th:if="${session.new!=null}" th:each="newquestion : ${session.new}">
+                    <span><h5><a th:text="${newquestion.title}" th:href="@{'/question/'+${newquestion.id}}"></a></h5></span>
+                    <span style="float: right;" class="text-desc" th:text="${#dates.format(newquestion.createtime,'yyyy-MM-dd')}"></span>
+                </div>
+            </span>
+            <hr>
+            <h4><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>热门标签</h4>
+        </div>
+    </div>
+    <!--模态框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-left: 200px;">
+                        <span><h4>使用github账号登录</h4></span>
+                        <div>
+                            <img src="/img/1109058.gif" height="128" width="128"/>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button id="btn" onclick="btn()" type="button" class="btn btn-primary">
-                            确定
-                        </button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="btn" onclick="btn()" type="button" class="btn btn-primary">
+                        确定
+                    </button>
                 </div>
             </div>
         </div>

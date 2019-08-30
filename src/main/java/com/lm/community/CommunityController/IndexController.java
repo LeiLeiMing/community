@@ -7,6 +7,7 @@ import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.IndexService;
 import com.lm.community.Service.LaunchService;
 import com.lm.community.Service.LoginService;
+import com.lm.community.Service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class IndexController {
     private LaunchService launchService;
     @Autowired
     private IndexService indexService;
+    @Autowired
+    private PageService pageService;
+
 
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model,
@@ -40,6 +44,12 @@ public class IndexController {
             Integer allNotReadCount = indexService.findAllNotReadCount(user.getName());
             request.getSession().setAttribute("allnotreadcount",allNotReadCount);
         }
+        //查询热门文章
+        List<Question> hostQuestions = pageService.findHostQuestions();
+        request.getSession().setAttribute("host",hostQuestions);
+        //查询最新文章
+        List<Question> newQuestion = pageService.findNewQuestion();
+        request.getSession().setAttribute("new",newQuestion);
         model.addAttribute("allquestion",allquestion);
         return "index";
     }

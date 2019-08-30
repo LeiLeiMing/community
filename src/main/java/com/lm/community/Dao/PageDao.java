@@ -13,7 +13,7 @@ public interface PageDao {
     @Select("select count(1) from question where username = #{username}")
     Integer findQuestionCountByUid(String username);
 
-    @Select("select * from question where id = #{id}")
+    @Select("select * from question where id = #{id} ")
     @Results(id = "questions", value = {
             @Result(id = true,property = "id",column = "id"),
             @Result(property = "desction",column = "desction"),
@@ -43,7 +43,7 @@ public interface PageDao {
      * @param tag
      * @return
      */
-    @Select(" select * FROM question where tag like CONCAT('%',#{tag},'%') and id not in (#{id})")
+    @Select(" select * FROM question where tag like CONCAT('%',#{tag},'%') and id not in (#{id}) order by id desc")
     @Results(id = "simplequestions", value = {
             @Result(id = true,property = "id",column = "id"),
             @Result(property = "desction",column = "desction"),
@@ -67,4 +67,13 @@ public interface PageDao {
      */
     @Update("update question set title = #{title},desction = #{desction},tag = #{tag} where id = #{id}")
     void editQuestionById(Question question);
+
+    /**
+     * 热门问题
+     */
+    @Select("select * from question  order by viewcount desc limit 0,10")
+    List<Question> findHostQuestions();
+
+    @Select("select * from question order by createtime desc limit 0,10")
+    List<Question> findNewQuestion();
 }

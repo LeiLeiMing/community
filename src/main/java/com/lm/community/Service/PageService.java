@@ -20,4 +20,8 @@ public interface PageService {
     List<Question> findSimleQuestion(String[] tags,Integer id);
 
     void editQuestionById(Question question);
+
+    List<Question> findHostQuestions();
+
+    List<Question> findNewQuestion();
 }
