@@ -74,6 +74,29 @@ public interface PageDao {
     @Select("select * from question  order by viewcount desc limit 0,10")
     List<Question> findHostQuestions();
 
+    /**
+     * 最新问题
+     * @return
+     */
     @Select("select * from question order by createtime desc limit 0,10")
     List<Question> findNewQuestion();
+
+    @Select("select * from question where title like CONCAT('%',#{search},'%') or tag like CONCAT('%',#{search},'%') or username like CONCAT('%',#{search},'%')")
+    @Results(id = "searchquestion", value = {
+            @Result(id = true,property = "id",column = "id"),
+            @Result(property = "desction",column = "desction"),
+            @Result(property = "createtime",column = "createtime"),
+            @Result(property = "modiftime",column = "modiftime"),
+            @Result(property = "author",column = "author"),
+            @Result(property = "commentcount",column = "commentcount"),
+            @Result(property = "viewcount",column = "viewcount"),
+            @Result(property = "likecount",column = "likecount"),
+            @Result(property = "tag",column = "tag"),
+            @Result(property = "title",column = "title"),
+            @Result(property = "username",column = "username"),
+            @Result(property = "saveSession",column = "author",
+                    many = @Many(select = "com.lm.community.Dao.SaveSessionDao.findUserById",fetchType = FetchType.DEFAULT)),
+    })
+    List<Question> searchQuestion(String search);
+
 }

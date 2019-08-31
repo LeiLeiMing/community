@@ -120,4 +120,9 @@ public class PageServiceImpl implements PageService {
     public List<Question> findNewQuestion() {
         return pageDao.findNewQuestion();
     }
+
+    @Override
+    public List<Question> searchQuestion(String search) {
+        return pageDao.searchQuestion(search);
+    }
 }

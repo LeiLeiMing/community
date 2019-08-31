@@ -9,7 +9,7 @@
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/comment.js"></script>
 </head>
-<body style="background: #efefef;">
+<body>
 <script>
     window.onload=function () {
         var a = window.localStorage.getItem("closeable");
@@ -87,8 +87,10 @@
             <span>
                 <div th:if="${session.host!=null}" th:each="hostquestion : ${session.host}">
                     <div>
-                        <span><h5><a th:text="${hostquestion.title}" th:href="@{'/question/'+${hostquestion.id}}"></a></h5></span>
-                        <span style="float: right;" class="text-desc"><span th:text="${hostquestion.viewcount}"></span>次阅读</span>
+                        <h5>
+                            <span><a th:text="${hostquestion.title}" th:href="@{'/question/'+${hostquestion.id}}"></a></span>
+                            <span style="float: right;" class="text-desc"><span th:text="${hostquestion.viewcount}"></span>次阅读</span>
+                        </h5>
                     </div>
                 </div>
             </span>
@@ -97,8 +99,11 @@
             <hr>
             <span>
                 <div th:if="${session.new!=null}" th:each="newquestion : ${session.new}">
-                    <span><h5><a th:text="${newquestion.title}" th:href="@{'/question/'+${newquestion.id}}"></a></h5></span>
-                    <span style="float: right;" class="text-desc" th:text="${#dates.format(newquestion.createtime,'yyyy-MM-dd')}"></span>
+                    <h5>
+                        <span><a th:text="${newquestion.title}" th:href="@{'/question/'+${newquestion.id}}"></a></span>
+                        <span style="float: right;" class="text-desc" th:text="${#dates.format(newquestion.createtime,'yyyy-MM-dd')}"></span>
+                    </h5>
+
                 </div>
             </span>
             <hr>
@@ -130,6 +135,8 @@
             </div>
         </div>
     </div>
+    <!--尾部-->
+    <div th:insert="~{footer :: footer}"></div>
 </div>
 </body>
 </html>

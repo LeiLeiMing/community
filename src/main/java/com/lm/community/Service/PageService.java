@@ -24,4 +24,6 @@ public interface PageService {
     List<Question> findHostQuestions();
 
     List<Question> findNewQuestion();
+
+    List<Question> searchQuestion(String search);
 }

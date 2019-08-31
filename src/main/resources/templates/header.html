@@ -22,18 +22,22 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">知秋论坛</a>
-            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>发现</a>
-            <a class="navbar-brand" href="#"><span ></span>关于站点</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" action="/question/search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索问题">
+                    <input type="text" class="form-control" name="searchquestion" placeholder="搜索问题">
                 </div>
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a  href="/"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>发现</a>
+                </li>
+                <li>
+                    <a  href="#">关于站点</a>
+                </li>
                 <li th:if="${session.user!=null}" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
                         <span><span class="glyphicon glyphicon-bell" aria-hidden="true"></span><span class="badge" style="background-color: red" th:text="${session.allnotreadcount}">42</span></span>

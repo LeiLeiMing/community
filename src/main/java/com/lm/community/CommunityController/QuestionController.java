@@ -6,6 +6,7 @@ import com.lm.community.Service.CommentService;
 import com.lm.community.Service.LaunchService;
 import com.lm.community.Service.PageService;
 import com.lm.community.Service.RecommentService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * question
+ */
 @Controller
 public class QuestionController {
 
@@ -30,6 +34,13 @@ public class QuestionController {
     private LaunchService launchService;
 
 
+    /**
+     * 指定id的question
+     * @param id
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id")Integer id, Model model, HttpServletRequest request){
         //新增阅读数
@@ -52,14 +63,28 @@ public class QuestionController {
         return "questions";
     }
 
+    /**
+     * 编辑
+     * @param question
+     * @param model
+     * @return
+     */
     @PostMapping("/question/edit")
     public String edit(Question question,Model model){
         //更新信息
         pageService.editQuestionById(question);
         //重新查询
         Question question1 = pageService.findQuestionById(question.getId());
-
         model.addAttribute("question",question1);
         return "questions";
+    }
+
+    @PostMapping("/question/search")
+    public String search( String searchquestion,Model model){
+        //模糊查询  以标题  标签 文章作者为关键字进行模糊搜索
+        List<Question> questions = pageService.searchQuestion(searchquestion);
+        model.addAttribute("search",questions);
+        model.addAttribute("searchkey",searchquestion);
+        return "search";
     }
 }

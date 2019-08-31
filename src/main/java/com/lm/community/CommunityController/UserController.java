@@ -6,6 +6,7 @@ import com.lm.community.Domain.SaveSession;
 import com.lm.community.Provider.GithubUtils;
 import com.lm.community.Service.GithubUserService;
 import com.lm.community.Service.SessionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Controller
+@Slf4j  //日志注解
 public class UserController {
 
     /**
@@ -73,6 +75,8 @@ public class UserController {
             //重定向至首页
             return "redirect:/";
         }else{
+            //打印登录失败日志
+            log.error("login error,user is null");
             return "redirect:/";
         }
     }
