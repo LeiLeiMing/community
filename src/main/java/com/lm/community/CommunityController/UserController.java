@@ -54,6 +54,7 @@ public class UserController {
         token.setCode(code);
         token.setRedirect_uri(redirect_url);
         token.setState(state);
+        System.out.println("token:"+token);
         String accessToken = githubUtils.getAccessToken(token);
         GithubUser user = githubUtils.getUser(accessToken);
         if(user!=null){

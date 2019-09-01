@@ -20,7 +20,7 @@ function post() {
             if (data.message == "notlogin"){
                 var y = confirm("登录后才可以评论哦，是否前去登录？");
                 if (y){
-                    window.open("https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://116.62.125.141:8080/callback&scope=user&state=1")
+                    window.open("https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://116.62.125.141/callback&scope=user&state=1")
                     /*目的是不转跳到首页*/
                     window.localStorage.setItem("closeable",true);
                     //刷新页面
@@ -62,7 +62,7 @@ function postrecomment(id) {
             if (data.message == "notlogin"){
                 var y = confirm("登录后才可以评论哦，是否前去登录？");
                 if (y){
-                    window.open("https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://116.62.125.141:8080/callback&scope=user&state=1")
+                    window.open("https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://116.62.125.141/callback&scope=user&state=1")
                     /*目的是不转跳到首页*/
                     window.localStorage.setItem("closeable",true);
                     //刷新页面
@@ -98,7 +98,7 @@ function deletecomment(id) {
 }
 
 function btn() {
-     window.location.href="https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://116.62.125.141:8080/callback&scope=user&state=1";
+     window.location.href="https://github.com/login/oauth/authorize?client_id=55a4346801c449bf5204&redirect_uri=http://116.62.125.141/callback&scope=user&state=1";
 }
 
 
