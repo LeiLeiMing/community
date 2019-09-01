@@ -19,7 +19,7 @@ public class LaunchController {
     @Autowired
     private IndexService indexService;
 
-    @GetMapping("launch")
+    @GetMapping("/launch")
     public String launch(HttpServletRequest request){
         //判断用户是否登录
         SaveSession user = (SaveSession) request.getSession().getAttribute("user");
