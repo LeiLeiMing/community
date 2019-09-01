@@ -19,16 +19,14 @@ public class LaunchController {
     @Autowired
     private IndexService indexService;
 
-    @GetMapping("/launch")
+    @GetMapping("launch")
     public String launch(HttpServletRequest request){
-        System.out.println("进来了");
         //判断用户是否登录
         SaveSession user = (SaveSession) request.getSession().getAttribute("user");
         if(user!=null){
             //查询所有未（总）读评论数量
             Integer allNotReadCount = indexService.findAllNotReadCount(user.getName());
             request.getSession().setAttribute("allnotreadcount",allNotReadCount);
-            System.out.println("发布");
             return "launch";
         }
         return "redirect:/";
