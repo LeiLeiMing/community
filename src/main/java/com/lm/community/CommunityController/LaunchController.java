@@ -27,7 +27,7 @@ public class LaunchController {
             //查询所有未（总）读评论数量
             Integer allNotReadCount = indexService.findAllNotReadCount(user.getName());
             request.getSession().setAttribute("allnotreadcount",allNotReadCount);
-            return "/launch";
+            return "launch";
         }
         return "redirect:/";
     }
@@ -48,6 +48,6 @@ public class LaunchController {
             return "redirect:/";
         }
         request.getSession().setAttribute("error","提交数据不能为空");
-        return "/launch";
+        return "redirect:/launch";
     }
 }
