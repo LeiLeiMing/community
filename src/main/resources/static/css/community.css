@@ -12,6 +12,15 @@
 }
 
 body {
-    padding-top: 100px;
+    padding-top: 60px;
     background:#efefef;
+}
+
+.communti-body{
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.main{
+    margin: 30px;
 }
