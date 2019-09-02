@@ -111,12 +111,12 @@ function titleonblus(){
     var title = $('#title').val();
     var desc = $('#desc').val();
     var tag = $('#tag').val();
-    if (title==''){
+    if (title==''||title==null){
         $('#ntitle').show();
         $('#sub').attr('disabled',true);
     }else{
         $('#ntitle').hide();
-        if (title!=''&&desc!=''&&tag!=''){
+        if (title!=''&&desc!=''&&tag!=''&&title!=null&&desc!=null&&tag!=null){
             $('#sub').attr('disabled',false);
         }
     }
@@ -126,12 +126,12 @@ function desconblus(){
     var title = $('#title').val();
     var desc = $('#desc').val();
     var tag = $('#tag').val();
-    if (desc==''){
+    if (desc==''||desc==null){
         $('#ndesc').show();
         $('#sub').attr('disabled',true);
     }else{
         $('#ndesc').hide();
-        if (title!=''&&desc!=''&&tag!=''){
+        if (title!=''&&desc!=''&&tag!=''&&title!=null&&desc!=null&&tag!=null){
             $('#sub').attr('disabled',false);
         }
 
@@ -142,12 +142,12 @@ function tagonblus(){
     var title = $('#title').val();
     var desc = $('#desc').val();
     var tag = $('#tag').val();
-    if (tag==''){
+    if (tag==''||tag ==null){
         $('#ntag').show();
         $('#sub').attr('disabled',true);
     }else{
         $('#ntag').hide();
-        if (title!=''&&desc!=''&&tag!=''){
+        if (title!=''&&desc!=''&&tag!=''&&title!=null&&desc!=null&&tag!=null){
             $('#sub').attr('disabled',false);
         }
     }
