@@ -4,8 +4,10 @@ import com.lm.community.Domain.Question;
 import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.IndexService;
 import com.lm.community.Service.LaunchService;
+import com.lm.community.Utils.LaunchCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -37,8 +39,17 @@ public class LaunchController {
      * @return
      */
     @PostMapping("/dolaunch")
-    public String dolaunch(Question question,HttpServletRequest request){
+    public String dolaunch(Question question, HttpServletRequest request, Model model){
+        //核实是否有空格
+        String title = question.getTitle();
+        String desction = question.getDesction();
+        String tag = question.getTag();
         if(question!=null){
+            //核实空格
+            if(LaunchCheck.check(title,desction,tag)){
+                model.addAttribute("error","不能有空格项");
+                return "launch";
+            }
             //设置一些数据的初始值
             question.setLikecount(0);
             question.setCommentcount(0);
