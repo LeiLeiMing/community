@@ -46,9 +46,9 @@ public class LaunchController {
         String tag = question.getTag();
         if(question!=null){
             //核实空格
-            if(LaunchCheck.check(title,desction,tag)){
-                model.addAttribute("error","不能有空格项");
-                return "launch";
+            if(LaunchCheck.check(title, desction, tag)==false){
+               request.getSession().setAttribute("error","不能有全部空格项，请重新发布");
+                return "redirect:/launch";
             }
             //设置一些数据的初始值
             question.setLikecount(0);
