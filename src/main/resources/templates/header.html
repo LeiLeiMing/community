@@ -10,7 +10,7 @@
     <script src="/js/comment.js"></script>
 
 </head>
-<body >
+<body>
 <div th:fragment="header">
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -40,11 +40,11 @@
                 </li>
                 <li th:if="${session.user!=null}" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
-                        <span><span class="glyphicon glyphicon-bell" aria-hidden="true"></span><span class="badge" style="background-color: red" th:text="${session.allnotreadcount}">42</span></span>
+                        <span><span class="glyphicon glyphicon-bell" aria-hidden="true"></span><span class="badge" style="background-color: red" th:if="${session.allnotreadcount!=0}" th:text="${session.allnotreadcount}">42</span></span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile/remessage"><span>收到的回复</span><span class="badge" style="background-color: red;float: right" th:text="${session.allnotreadcount}"></span></a></li>
+                        <li><a href="/profile/remessage"><span>收到的回复</span><span class="badge" style="background-color: red;float: right" th:if="${session.allnotreadcount!=0}" th:text="${session.allnotreadcount}"></span></a></li>
                         <li><a href="#"><span>收到的赞</span><span class="badge" style="background-color: red;float: right"></span></a></li>
                         <li><a href="#"><span>系统通知</span><span class="badge" style="background-color: red;float: right"></span></a></li>
                     </ul>
