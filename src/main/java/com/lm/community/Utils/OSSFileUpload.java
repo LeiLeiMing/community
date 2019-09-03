@@ -28,8 +28,8 @@ public class OSSFileUpload {
         String objectName = name;
         // 上传内容到指定的存储空间（bucketName）并保存为指定的文件名称（objectName）。
         ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(bytes));
-        // 指定过期时间为n年。
-        Date expiration = new Date(new Date().getTime() + Integer.MAX_VALUE );
+        // 指定过期时间为10分钟。
+        Date expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 365 * 10 );
         GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest(bucketName, objectName, HttpMethod.GET);
         req.setExpiration(expiration);
         //获取云服务器上文件的地址
