@@ -70,7 +70,7 @@ function postrecomment(id) {
                 }
             }
             if(data.message == "commentisnull"){
-                alert("评论不能为空");
+                alert("回复不能为空");
             }
         },
         dataType:"json"
@@ -102,11 +102,11 @@ function btn() {
 }
 
 
-$(function(){
+/*$(function(){
     $('#sub').attr('disabled',true);
-});
+});*/
 
-function titleonblus(){
+/*function titleonblus(){
     //获取文本框内容
     var title = $('#title').val();
     var desc = $('#desc').val();
@@ -151,7 +151,7 @@ function tagonblus(){
             $('#sub').attr('disabled',false);
         }
     }
-}
+}*/
 
 
 function cancel(id) {

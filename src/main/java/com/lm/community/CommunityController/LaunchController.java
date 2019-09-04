@@ -47,7 +47,7 @@ public class LaunchController {
         if(question!=null){
             //核实空格
             if(LaunchCheck.check(title, desction, tag)==false){
-               request.getSession().setAttribute("error","不能有全部空格项，请重新发布");
+               request.getSession().setAttribute("error","填写内容不能为空，请重新发布");
                 return "redirect:/launch";
             }
             //设置一些数据的初始值

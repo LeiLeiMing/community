@@ -6,6 +6,7 @@ import com.lm.community.Service.CommentService;
 import com.lm.community.Service.LaunchService;
 import com.lm.community.Service.PageService;
 import com.lm.community.Service.RecommentService;
+import com.lm.community.Utils.LaunchCheck;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,19 +65,36 @@ public class QuestionController {
     }
 
     /**
-     * 编辑
+     * 转至编辑页面
+     * @param
+     * @return
+     */
+    @GetMapping("/question/toedit/{id}")
+    public String toedit(@PathVariable(name = "id")Integer id,Model model){
+        //重新查询
+        Question oldquestion = pageService.findQuestionById(id);
+        model.addAttribute("old",oldquestion);
+        return "edit";
+    }
+
+    /**
+     * 保存编辑
      * @param question
      * @param model
      * @return
      */
     @PostMapping("/question/edit")
-    public String edit(Question question,Model model){
+    public String edit(Question question,Model model,HttpServletRequest request){
+        if(LaunchCheck.check(question.getTitle(), question.getDesction(), question.getTag())==false){
+            request.getSession().setAttribute("error","填写内容不能为空，请重新发布");
+            return "redirect:/question/toedit/"+question.getId();
+        }
         //更新信息
         pageService.editQuestionById(question);
         //重新查询
         Question question1 = pageService.findQuestionById(question.getId());
         model.addAttribute("question",question1);
-        return "questions";
+        return "redirect:/question/"+question.getId();
     }
 
     @PostMapping("/question/search")

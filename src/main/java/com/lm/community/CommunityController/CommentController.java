@@ -6,6 +6,7 @@ import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.CommentService;
 import com.lm.community.Service.LaunchService;
 import com.lm.community.Service.RecommentService;
+import com.lm.community.Utils.CommentCheck;
 import com.lm.community.Utils.getAppendComment;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,15 @@ public class CommentController {
     @ResponseBody
     @PostMapping("/comment")
     public Object comment(@RequestBody Comment comment, HttpServletRequest request){
-        System.out.println("一级评论的信息:"+comment);
 
         Map<Object, Object> map = new HashMap<>();
+
+        //判断是否全部为空格
+        if(CommentCheck.check(comment.getComment())==false){
+            map.put("message","commentisnull");
+            return map;
+        }
+
         if(comment.getComment()==""){
             map.put("message","commentisnull");
             return map;
@@ -69,6 +76,11 @@ public class CommentController {
     @PostMapping("/recomment")
     public Object recomment(@RequestBody Recomment recomment, HttpServletRequest request){
         Map<Object, Object> map = new HashMap<>();
+        //判断是否全部为空格
+        if(CommentCheck.check(recomment.getRecomment())==false){
+            map.put("message","commentisnull");
+            return map;
+        }
         if(recomment.getRecomment()==""){
             map.put("message","commentisnull");
             return map;
