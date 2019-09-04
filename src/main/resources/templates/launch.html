@@ -13,10 +13,11 @@
     <script src="/js/plugins/image-dialog/image-dialog.js" type="application/javascript"></script>
 
 </head>
-<body style="background: #efefef">
+<body background="/img/background.jpg">
 <div>
     <div th:insert="~{header :: header}"></div>
-<div class="container-fluid main">
+    <div class="container-fluid main">
+    <div>
     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
         <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
         <h3 th:if="${session.error!=null}">
@@ -60,7 +61,7 @@
         </form>
     </div>
 
-    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="color: white" >
         <h2>问题发起指南</h2>
         <hr>
         <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
@@ -72,6 +73,7 @@
     </div>
 </div>
 </div>
-
+    <!--尾部-->
+    <div th:insert="~{footer :: footer}"></div>
 </body>
 </html>
