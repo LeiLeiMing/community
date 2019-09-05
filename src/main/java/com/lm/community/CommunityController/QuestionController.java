@@ -65,11 +65,13 @@ public class QuestionController {
         request.getSession().setAttribute("comments",comments);
         //问题点赞数
         Integer likecount = pageService.likecount(question.getId());
-        //查询当前用户下对该篇问题点赞的情况，如果有，则不允许继续点赞
-        Likequestion likeByUserAndQid = likeQuestionService.findLikeByUserAndQid(question.getId(), user.getId());
-        //标记红色已点赞图标
-        if(likeByUserAndQid!=null){
-            model.addAttribute("likekey","red");
+        if(user!=null){
+            //查询当前用户下对该篇问题点赞的情况，如果有，则不允许继续点赞
+            Likequestion likeByUserAndQid = likeQuestionService.findLikeByUserAndQid(question.getId(), user.getId());
+            //标记红色已点赞图标
+            if(likeByUserAndQid!=null){
+                model.addAttribute("likekey","red");
+            }
         }
         model.addAttribute("like",likecount);
         model.addAttribute("question",question);
