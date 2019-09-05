@@ -14,10 +14,14 @@
     <script src="/js/lib/marked.min.js"></script>
     <script src="/js/lib/prettify.min.js"></script>
     <script src="/js/plugins/image-dialog/image-dialog.js" type="application/javascript"></script>
+    <script src="/js/likecomment.js"></script>
 
 </head>
 <body background="/img/background.jpg">
 <div>
+    <!--返回顶部的位置-->
+    <span  name="gotop"></span>
+    <!--返回顶部的位置-->
     <div th:insert="~{header :: header}"></div>
     <div class="container-fluid main" style="background: white" id="myDiv">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background: white">
@@ -48,6 +52,10 @@
                     <!--// th:href="@{'/edit/'+${question.id}}-->
                 </span>
             </span>
+            <!--文章点赞-->
+            <!--未点赞文章-->
+            <span id="questionlike" th:onclick="|likeclick(${question.id})|" style="float: right;font-size: 20px" class=" glyphicon glyphicon-thumbs-up " aria-hidden="true" th:if="${likekey==null}" th:text="${like}"></span>
+            <span th:onclick="|likeclick(${question.id})|" style="float: right;font-size: 20px;color: red" class=" glyphicon glyphicon-thumbs-up " aria-hidden="true" th:if="${likekey!=null}" th:text="${like}"></span>
             <!--<span  style="float: right;font-size: 25px;"><span id="like" onclick="like()" class=" glyphicon glyphicon-thumbs-up " aria-hidden="true"></span>-->
                 <!--<span id="yes" style="display: none">谢谢!</span>-->
                 <!--<span id="begin">赞一个</span>-->
@@ -215,6 +223,12 @@
             </div>
         </div>
     </div>
+    <!--返回顶部图标-->
+    <a href="#gotop" >
+        <div style="margin-left: 80%">
+            <img  src="/img/top.png" id="gotop" alt="" style="position: fixed;bottom: 10px;display: none;height: 50px;width: 50px">
+        </div>
+    </a>
     <!--尾部-->
     <div th:insert="~{footer :: footer}"></div>
 </div>

@@ -125,4 +125,19 @@ public class PageServiceImpl implements PageService {
     public List<Question> searchQuestion(String search) {
         return pageDao.searchQuestion(search);
     }
+
+    /**
+     * 更新点赞数
+     * @param id
+     */
+    @Override
+    public void updateLikecount(Integer id) {
+        pageDao.updateLikecount(id);
+    }
+
+
+    @Override
+    public Integer likecount(Integer questionid) {
+        return pageDao.likecount(questionid);
+    }
 }

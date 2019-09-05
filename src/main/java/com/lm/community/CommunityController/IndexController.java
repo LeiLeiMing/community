@@ -34,7 +34,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model,
                         @RequestParam(name = "page",defaultValue = "1")Integer page,
-                        @RequestParam(name = "size",defaultValue = "10")Integer size){
+                        @RequestParam(name = "size",defaultValue = "20")Integer size){
         //分页查询所有的提问
         List<Question> allquestion = launchService.findAllQuestionByLimi(page,size, model);
         //获取当前登录的用户

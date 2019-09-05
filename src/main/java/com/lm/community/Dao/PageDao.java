@@ -56,6 +56,7 @@ public interface PageDao {
             @Result(property = "tag",column = "tag"),
             @Result(property = "title",column = "title"),
             @Result(property = "username",column = "username"),
+            @Result(property = "username",column = "username"),
             @Result(property = "saveSession",column = "author",
                     many = @Many(select = "com.lm.community.Dao.SaveSessionDao.findUserById",fetchType = FetchType.DEFAULT)),
     })
@@ -99,4 +100,16 @@ public interface PageDao {
     })
     List<Question> searchQuestion(String search);
 
+    /**
+     * 更新点赞数
+     * @param id
+     */
+    @Update("update question set likecount = likecount+1 where id = #{id}")
+    public void updateLikecount(Integer id);
+
+    /**
+     * 点赞总数
+     */
+    @Select("select likecount from question where id =#{questionid}")
+    public Integer likecount(Integer questionid);
 }

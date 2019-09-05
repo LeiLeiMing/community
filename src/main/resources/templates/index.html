@@ -20,6 +20,9 @@
     }
 </script>
 <div>
+    <!--返回顶部的位置-->
+    <span  name="gotop"></span>
+    <!--返回顶部的位置-->
     <div th:insert="~{header :: header}"></div>
     <div class="container-fluid main"  style="color: white">
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -147,6 +150,12 @@
             </div>
         </div>
     </div>
+    <!--返回顶部图标-->
+    <a href="#gotop" >
+        <div style="margin-left: 80%">
+            <img  src="/img/top.png" id="gotop" alt="" style="position: fixed;bottom: 10px;display: none;height: 50px;width: 50px">
+        </div>
+    </a>
     <!--尾部-->
     <div th:insert="~{footer :: footer}"></div>
 </div>

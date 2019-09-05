@@ -13,6 +13,7 @@
 
 body {
     padding-top: 50px;
+    font-family: STHeiti;
 }
 
 .communti-body{
@@ -33,3 +34,4 @@ body {
    text-decoration: none;
     color: inherit;
 }
+

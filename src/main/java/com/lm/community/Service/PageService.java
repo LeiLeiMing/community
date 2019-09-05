@@ -15,15 +15,19 @@ public interface PageService {
 
     Question findQuestionById(Integer id);
 
-    void updateViewCount(Integer id);
+    public void updateViewCount(Integer id);
 
     List<Question> findSimleQuestion(String[] tags,Integer id);
 
-    void editQuestionById(Question question);
+    public void editQuestionById(Question question);
 
     List<Question> findHostQuestions();
 
     List<Question> findNewQuestion();
 
     List<Question> searchQuestion(String search);
+
+    public void updateLikecount(Integer id);
+
+    public Integer likecount(Integer questionid);
 }

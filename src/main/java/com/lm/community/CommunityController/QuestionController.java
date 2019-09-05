@@ -1,21 +1,19 @@
 package com.lm.community.CommunityController;
 
 import com.lm.community.Domain.Comment;
+import com.lm.community.Domain.Likequestion;
 import com.lm.community.Domain.Question;
-import com.lm.community.Service.CommentService;
-import com.lm.community.Service.LaunchService;
-import com.lm.community.Service.PageService;
-import com.lm.community.Service.RecommentService;
+import com.lm.community.Domain.SaveSession;
+import com.lm.community.Service.*;
 import com.lm.community.Utils.LaunchCheck;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +32,9 @@ public class QuestionController {
     @Autowired
     private LaunchService launchService;
 
+    @Autowired
+    private LikeQuestionService likeQuestionService;
+
 
     /**
      * 指定id的question
@@ -44,6 +45,8 @@ public class QuestionController {
      */
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id")Integer id, Model model, HttpServletRequest request){
+        //获取当前用户
+        SaveSession user = (SaveSession) request.getSession().getAttribute("user");
         //新增阅读数
         pageService.updateViewCount(id);
         //根据id查询文章
@@ -60,6 +63,15 @@ public class QuestionController {
         request.getSession().setAttribute("similequestion",simileQuestion);
         //把comment放进Session
         request.getSession().setAttribute("comments",comments);
+        //问题点赞数
+        Integer likecount = pageService.likecount(question.getId());
+        //查询当前用户下对该篇问题点赞的情况，如果有，则不允许继续点赞
+        Likequestion likeByUserAndQid = likeQuestionService.findLikeByUserAndQid(question.getId(), user.getId());
+        //标记红色已点赞图标
+        if(likeByUserAndQid!=null){
+            model.addAttribute("likekey","red");
+        }
+        model.addAttribute("like",likecount);
         model.addAttribute("question",question);
         return "questions";
     }
@@ -104,5 +116,45 @@ public class QuestionController {
         model.addAttribute("search",questions);
         model.addAttribute("searchkey",searchquestion);
         return "search";
+    }
+
+
+    /**
+     * 点赞功能
+     * 用户一点赞，先判断该用户是否登录，诺没有登录先提示登录
+     * 正常用户点赞后，先会把当前用户（点赞用户id存进linkauthor）
+     * 异步返回当前点赞数（likecount=likecount+1）,异步返回并把点赞图标变红
+     * 下次再进入该文章将会查询该文章下当前用户是否点赞
+     */
+    @ResponseBody
+    @PostMapping("/question/like")
+    public Object like(@RequestBody Question question,HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        //获取当前点赞的用户
+        SaveSession user = (SaveSession) request.getSession().getAttribute("user");
+        if(user==null){
+            map.put("message","userisnull");
+            return map;
+        }
+        //查询当前用户下对该篇问题点赞的情况，如果有，则不允许继续点赞
+        Likequestion likeByUserAndQid = likeQuestionService.findLikeByUserAndQid(question.getId(), user.getId());
+        if(likeByUserAndQid!=null){
+            map.put("message","hadlike");
+            return map;
+        }
+        Likequestion likequestion = new Likequestion();
+        likequestion.setLikeuserid(user.getId());
+        likequestion.setQuestionid(question.getId());
+        likequestion.setStatus(1);
+        //把点赞的信息存进去
+        likeQuestionService.saveLike(likequestion);
+        //更新问题点赞数
+        pageService.updateLikecount(question.getId());
+        //点赞总数
+        Integer likecount = pageService.likecount(question.getId());
+        //将点赞成功的信息返回
+        map.put("message","success");
+        map.put("likecount",likecount);
+        return map;
     }
 }
