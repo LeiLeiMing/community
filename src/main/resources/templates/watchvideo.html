@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>视频专区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/comment.js"></script>
+</head>
+<body background="/img/background.jpg">
+<!--<script>
+    window.onload=function () {
+        var a = window.localStorage.getItem("closeable");
+        if (a == "true"){
+            window.close();
+            window.localStorage.removeItem("closeable");
+        }
+    }
+</script>-->
+<div>
+    <!--返回顶部的位置-->
+    <span  name="gotop"></span>
+    <!--返回顶部的位置-->
+    <div th:insert="~{header :: header}"></div>
+    <div class="container-fluid" style="margin: 30px">
+        <span class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+                <iframe style="min-height: 500px;min-width: 600px;" src="//player.bilibili.com/player.html?aid=57798444&cid=100870975&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
+            </iframe>
+        </span>
+        <span class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+            <p style="color: white">推荐</p>
+        </span>
+    </div>
+    <!--模态框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-left: 200px;">
+                        <span><h4>使用github账号登录</h4></span>
+                        <div>
+                            <img src="/img/1109058.gif" height="128" width="128"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="btn" onclick="btn()" type="button" class="btn btn-primary">
+                        确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--返回顶部图标-->
+    <a href="#gotop" >
+        <div style="margin-left: 80%">
+            <img  src="/img/top.png" id="gotop" alt="" style="position: fixed;bottom: 10px;display: none;height: 50px;width: 50px">
+        </div>
+    </a>
+    <!--尾部-->
+    <div th:insert="~{footer :: footer}"></div>
+</div>
+</body>
+</html>
