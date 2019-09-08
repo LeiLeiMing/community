@@ -8,4 +8,6 @@ import java.util.List;
 public interface SessionService {
     void saveSession(SaveSession saveSession);
 
+    SaveSession findSavesession(String token);
+
 }

@@ -2,19 +2,15 @@ package com.lm.community.CommunityController;
 
 import com.lm.community.Domain.Comment;
 import com.lm.community.Domain.Recomment;
-import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.CommentService;
 import com.lm.community.Service.LaunchService;
 import com.lm.community.Service.RecommentService;
 import com.lm.community.Utils.CommentCheck;
-import com.lm.community.Utils.getAppendComment;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

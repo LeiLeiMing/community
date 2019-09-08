@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>我的提问</title>
+    <title>消息中心</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/community.css">
@@ -181,7 +181,7 @@
                     我的提问
                 </a>
                 <a href="/profile/remessage" th:class="${remessages=='remessages'}?'list-group-item active':'list-group-item'">
-                    <span class="badge" style="float: right;background-color: red" th:text="${session.allnotreadcount}"></span>
+                    <span class="badge" style="float: right;background-color: red" th:if="${session.allnotreadcount!=0}" th:text="${session.allnotreadcount}"></span>
                     收到的回复
                 </a>
             </div>

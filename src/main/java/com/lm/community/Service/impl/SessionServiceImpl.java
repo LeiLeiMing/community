@@ -18,4 +18,9 @@ public class SessionServiceImpl implements SessionService {
     public void saveSession(SaveSession saveSession) {
         saveSessionDao.saveSession(saveSession);
     }
+
+    @Override
+    public SaveSession findSavesession(String token) {
+        return saveSessionDao.findUserByToken(token);
+    }
 }

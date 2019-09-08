@@ -17,4 +17,7 @@ public interface SaveSessionDao {
 
     @Select("select * from savesession where id = #{commentor}")
     SaveSession findCommentorById(Integer commentor);
+
+    @Select("select * from savesession where token = #{token}")
+    SaveSession findUserByToken(String token);
 }

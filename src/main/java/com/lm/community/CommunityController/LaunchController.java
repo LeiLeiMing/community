@@ -47,6 +47,7 @@ public class LaunchController {
         if(question!=null){
             //核实空格
             if(LaunchCheck.check(title, desction, tag)==false){
+                System.out.println("进来发布的判断了");
                request.getSession().setAttribute("error","填写内容不能为空，请重新发布");
                 return "redirect:/launch";
             }
@@ -54,9 +55,14 @@ public class LaunchController {
             question.setLikecount(0);
             question.setCommentcount(0);
             question.setViewcount(0);
+            System.out.println(question);
             //存进数据库
-            launchService.saveQuestion(question,request);
+            if(request.getSession().getAttribute("user")!=null){
+                launchService.saveQuestion(question,request);
+                return "redirect:/";
+            }
             return "redirect:/";
+
         }
         request.getSession().setAttribute("error","提交数据不能为空");
         return "redirect:/launch";

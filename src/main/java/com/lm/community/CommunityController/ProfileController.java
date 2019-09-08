@@ -34,7 +34,7 @@ public class ProfileController {
              @RequestParam(name = "page",defaultValue = "1")Integer page, @RequestParam(name = "size",defaultValue = "10")Integer size){
 
         //登录判断
-        if(loginService.checkCookie(request)==null){
+        if(request.getSession().getAttribute("user")==null){
             model.addAttribute("error","未登录");
             return "redirect:/";
         }

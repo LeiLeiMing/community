@@ -30,7 +30,7 @@ public class LaunchServiceImpl implements LaunchService {
 
     @Override
     public void saveQuestion(Question question, HttpServletRequest request) {
-        SaveSession user = loginService.checkCookie(request);
+        SaveSession user = (SaveSession) request.getSession().getAttribute("user");
         question.setAuthor(user.getId());
         question.setUsername(user.getName());
         question.setCreatetime(new Date());

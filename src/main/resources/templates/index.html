@@ -8,6 +8,9 @@
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/comment.js"></script>
+    <script src="/js/user.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/messages_zh.min.js"></script>
 </head>
 <body background="/img/background.jpg">
 <script>
@@ -134,23 +137,104 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+                    <h4 class="modal-title" id="myModalLabel">登录方式(点击图标选择登录方式)</h4>
                 </div>
                 <div class="modal-body">
-                    <div style="margin-left: 200px;">
-                        <span><h4>使用github账号登录</h4></span>
-                        <div>
-                            <img src="/img/1109058.gif" height="128" width="128"/>
-                        </div>
+                    <div style="margin-left: 200px">
+                        <span>
+                            <h5>使用github账号登录</h5>
+                            <span>
+                                <img id="btn" onclick="btn()" src="/img/1109058.gif" height="100" width="100"/>
+                            </span>
+                        </span>
+                    </div>
+                    <div style="margin-left: 200px">
+                         <span>
+                            <h5>使用账号登录<a data-toggle="modal" data-target="#registerModal" data-dismiss="modal">点我注册</a></h5>
+                            <span style="margin-left: 10px">
+                                <a data-toggle="modal" data-target="#loginModal" data-dismiss="modal"><img src="/img/login.png" height="80" width="80"/></a>
+                            </span>
+                        </span>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button id="btn" onclick="btn()" type="button" class="btn btn-primary">
-                        确定
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--已有用户登录模态框-->
+    <div  class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="loginModalLabel">用户登录</h4>
+                </div>
+                <form id="loginform">
+                    <div class="modal-body">
+                        <div style="margin-left:170px">
+                                <div class="form-group">
+                                    <label for="mail">QQ邮箱:</label>
+                                    <input style="width: 60%" type="email" name="name" class="form-control" id="mail" placeholder="请输入邮箱地址">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">密码:</label>
+                                    <input name="password"  style="width: 60%" type="password" class="form-control" id="password" placeholder="请输入密码">
+                                </div>
+                                <div class="form-group">
+                                    <label for="code">邮箱验证码:</label>
+                                    <input style="width: 60%" type="text" name="code" class="form-control" id="code" placeholder="请输入邮箱验证码">
+                                    <input type="button" class="btn btn-default"  id="sendcode" onclick="sendmail()"   value="获取验证码">
+                                </div>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="login"  onclick="login()" class="btn btn-primary">
+                        登录
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+    <!--注册模态框-->
+    <div  class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="registerModalLabel">用户注册</h4>
+                </div>
+                <form id="registerform">
+                    <div class="modal-body">
+                        <div style="margin-left:170px">
+                            <div class="form-group">
+                                <label for="mail">QQ邮箱:<p id="exit" style="color: red;display: none">*该邮箱已被注册</p></label>
+                                <input style="width: 60%"  type="email" id="registermail" name="name"class="form-control" placeholder="请输入邮箱地址">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">密码:（长度6-16位，数字+字母组成，不含空格）</label>
+                                <input name="password" id="registerpassword"  style="width: 60%" type="password" class="form-control"  placeholder="请输入密码">
+                            </div>
+                            <div class="form-group">
+                                <label for="code">邮箱验证码:<p id="exitcode" style="color: red;display: none">*验证码错误</p></label>
+                                <input style="width: 60%" type="text"id="registercode" name="code" class="form-control"  placeholder="请输入邮箱验证码">
+                                <input type="button" class="btn btn-default" id="sendcode2"  onclick="sendmail2()"   value="获取验证码">
+
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button id="register"  onclick="register()" class="btn btn-primary">
+                            注册
+                        </button>
+                    </div>
+                </div>
         </div>
     </div>
     <!--返回顶部图标-->

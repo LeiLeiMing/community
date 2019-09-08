@@ -39,6 +39,10 @@ public class IndexController {
         List<Question> allquestion = launchService.findAllQuestionByLimi(page,size, model);
         //获取当前登录的用户
         SaveSession user = (SaveSession) request.getSession().getAttribute("user");
+        if(user==null){
+            //获取cookie用户
+            loginService.checkCookie(request);
+        }
         if(user!=null){
             //查询所有未（总）读评论数量
             Integer allNotReadCount = indexService.findAllNotReadCount(user.getName());
