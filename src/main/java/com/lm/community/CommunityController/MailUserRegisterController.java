@@ -65,7 +65,7 @@ public class MailUserRegisterController {
             return map;
         }
         //手动设置默认头像
-        mailUser.setAvatar_url("https://leiming-zhiqiu.oss-cn-beijing.aliyuncs.com/boy.png?Expires=1567949174&OSSAccessKeyId=TMP.hXpMPSj2E1YmKbujTS86sQmBjQXPDwMAaDZhvdw5TRqAzh4ez3ebFoUYGFbwanci5U5CC4RfTtyzgRHDcvbKwvKBHrwgTbNKGXFy52evdGYWuG3bYD5oF6YPQKNxi5.tmp&Signature=xzpvZSbWywcXPRnFoly19pRxVP0%3D");
+        mailUser.setAvatar_url("https://leiming-zhiqiu.oss-cn-beijing.aliyuncs.com/boy.png");
         mailUserService.registerMailUser(mailUser);
         map.put("message","success");
         return map; //注册成功
