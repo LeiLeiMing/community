@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>知秋论坛</title>
+    <link rel="icon" href="/img/header.png">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/editormd.css">
     <link rel="stylesheet" href="/css/bootstrap.css">
@@ -16,7 +17,7 @@
     <script src="/js/plugins/image-dialog/image-dialog.js" type="application/javascript"></script>
     <script src="/js/likecomment.js"></script>
     <script src="/js/user.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body background="/img/background.jpg">
 <div>
@@ -205,26 +206,25 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">登录方式</h4>
+                    <h4 class="modal-title" id="myModalLabel">登录方式(点击图标选择登录方式)</h4>
                 </div>
                 <div class="modal-body">
-                    <div style="margin-left: 100px">
+                    <div style="margin-left: 20%">
                         <span>
-                            <h4>使用github账号登录</h4>
+                            <h5>使用github账号登录</h5>
                             <span>
-                                <img id="btn" onclick="btn()" src="/img/1109058.gif" height="128" width="128"/>
+                                <img id="btn" onclick="btn()" src="/img/1109058.gif" height="100" width="100"/>
                             </span>
                         </span>
                     </div>
-                    <div style="margin-left: 100px">
+                    <div style="margin-left: 20%">
                          <span>
-                            <h4>使用已有账号登录/<a data-toggle="modal" data-target="#registerModal" data-dismiss="modal">没有账号？点击注册</a></h4>
-                         </span>
-                        <span style="margin-left: 10px">
-                                <a data-toggle="modal" data-target="#loginModal" data-dismiss="modal"><img src="/img/login.png" height="100" width="100"/></a>
+                            <h5>使用账号登录<a data-toggle="modal" data-target="#registerModal" data-dismiss="modal">点我注册</a></h5>
+                            <span style="margin-left: 10px">
+                                <a data-toggle="modal" data-target="#loginModal" data-dismiss="modal"><img src="/img/login.png" height="80" width="80"/></a>
                             </span>
+                        </span>
                     </div>
-                    </span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -279,7 +279,7 @@
                 </div>
                 <form id="registerform">
                     <div class="modal-body">
-                        <div style="margin-left:170px">
+                        <div style="margin-left:20%">
                             <div class="form-group">
                                 <label for="mail">QQ邮箱:<p id="exit" style="color: red;display: none">*该邮箱已被注册</p></label>
                                 <input style="width: 60%"  type="email" id="registermail" name="name"class="form-control" placeholder="请输入邮箱地址">
@@ -312,6 +312,37 @@
             <img  src="/img/top.png" id="gotop" alt="" style="position: fixed;bottom: 10px;display: none;height: 50px;width: 50px">
         </div>
     </a>
+    <!--侧边菜单-->
+    <div style="margin-left: 95%;position: fixed;bottom: 100px;">
+        <div>
+            <a class="href" href="/" >
+                <img  src="/img/say.png" id="s1" alt="" style="width: 30px;height: 30px" >
+            </a>
+            <font color="white">话题</font>
+        </div>
+        <br>
+        <div>
+            <a class="href" href="/" >
+                <img  src="/img/question.png" id="s1" alt="" style="width: 30px;height: 30px" >
+            </a>
+            <font color="white">问答</font>
+        </div>
+        <br>
+        <div>
+            <a class="href" href="/" >
+                <img  src="/img/like.png" id="s1" alt="" style="width: 30px;height: 30px" >
+            </a>
+            <font color="white">关注</font>
+        </div>
+        <br>
+        <div>
+            <a class="href" href="/" >
+                <img  src="/img/source.png" id="s1" alt="" style="width: 30px;height: 30px" >
+            </a>
+            <font color="white">资源</font>
+        </div>
+        <br>
+    </div>
     <!--尾部-->
     <div th:insert="~{footer :: footer}"></div>
 </div>

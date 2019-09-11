@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>知秋论坛</title>
+    <link rel="icon" href="/img/header.png">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/community.css">
@@ -11,6 +12,7 @@
     <script src="/js/user.js"></script>
     <script src="/js/jquery.validate.min.js"></script>
     <script src="/js/messages_zh.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body background="/img/background.jpg">
 <script>
@@ -27,20 +29,10 @@
     <span  name="gotop"></span>
     <!--返回顶部的位置-->
     <div th:insert="~{header :: header}"></div>
-    <div class="container-fluid main"  style="color: white">
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-            <span class="col-lg-2 col-md-4  col-sm-6 col-xs-6"><h4><a class="href" href="#">全部</a></h4></span>
-            <span class="col-lg-2 col-md-4  col-sm-6 col-xs-6"><h4><a class="href" href="/video/index">视频</a></h4></span>
-            <span class="col-lg-2 col-md-4  col-sm-6 col-xs-6"><h4><a class="href" href="#">分享</a></h4></span>
-            <span class="col-lg-2 col-md-4  col-sm-6 col-xs-6"><h4><a class="href" href="#">精品</a></h4></span>
-            <span class="col-lg-2 col-md-4  col-sm-6 col-xs-6"><h4><a class="href" href="#">链接</a></h4></span>
-            <span class="col-lg-2 col-md-4  col-sm-6 col-xs-6"><h4><a class="href" href="#">资料</a></h4></span>
-        </div>
-    </div>
     <div>
     <div class="container-fluid main" style="background: white" id="myDiv">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
-            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
+            <h3><span><img style="width: 30px" src="/img/find.png" /></span>发现</h3>
             <hr>
             <div  style="margin-top: 30px"  class="media" th:each="question : ${allquestion}">
                 <span class="media-left">
@@ -140,7 +132,7 @@
                     <h4 class="modal-title" id="myModalLabel">登录方式(点击图标选择登录方式)</h4>
                 </div>
                 <div class="modal-body">
-                    <div style="margin-left: 200px">
+                    <div style="margin-left: 20%">
                         <span>
                             <h5>使用github账号登录</h5>
                             <span>
@@ -148,7 +140,7 @@
                             </span>
                         </span>
                     </div>
-                    <div style="margin-left: 200px">
+                    <div style="margin-left: 20%">
                          <span>
                             <h5>使用账号登录<a data-toggle="modal" data-target="#registerModal" data-dismiss="modal">点我注册</a></h5>
                             <span style="margin-left: 10px">
@@ -210,7 +202,7 @@
                 </div>
                 <form id="registerform">
                     <div class="modal-body">
-                        <div style="margin-left:170px">
+                        <div style="margin-left:20%">
                             <div class="form-group">
                                 <label for="mail">QQ邮箱:<p id="exit" style="color: red;display: none">*该邮箱已被注册</p></label>
                                 <input style="width: 60%"  type="email" id="registermail" name="name"class="form-control" placeholder="请输入邮箱地址">
@@ -243,6 +235,37 @@
             <img  src="/img/top.png" id="gotop" alt="" style="position: fixed;bottom: 10px;display: none;height: 50px;width: 50px">
         </div>
     </a>
+    <!--侧边菜单栏-->
+    <div style="margin-left: 93%;position: fixed;bottom: 100px;">
+            <div>
+                <a class="href" href="/" >
+                    <img  src="/img/say.png" id="s1" alt="" style="width: 30px;height: 30px" >
+                </a>
+                <font color="white">话题</font>
+            </div>
+            <br>
+            <div>
+                <a class="href" href="/" >
+                    <img  src="/img/question.png" id="s1" alt="" style="width: 30px;height: 30px" >
+                </a>
+                <font color="white">问答</font>
+            </div>
+            <br>
+            <div>
+                <a class="href" href="/" >
+                    <img  src="/img/like.png" id="s1" alt="" style="width: 30px;height: 30px" >
+                </a>
+                <font color="white">关注</font>
+            </div>
+            <br>
+            <div>
+                <a class="href" href="/" >
+                    <img  src="/img/source.png" id="s1" alt="" style="width: 30px;height: 30px" >
+                </a>
+                <font color="white">资源</font>
+            </div>
+            <br>
+        </div>
     <!--尾部-->
     <div th:insert="~{footer :: footer}"></div>
 </div>
