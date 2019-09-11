@@ -27,7 +27,8 @@ public class MailUserServiceImpl implements MailUserService {
 
     @Override
     public MailUser findLoginUser(String password ,String name) {
-        MailUser user = mailUserDao.findLoginUser(name);
+        //验证用户名
+        MailUser user = mailUserDao.findLoginUser(name,password);
         if(user!=null){
             return user;
         }

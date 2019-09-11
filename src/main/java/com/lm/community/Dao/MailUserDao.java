@@ -22,6 +22,6 @@ public interface MailUserDao {
     /**
      * 获取登录用户信息
      */
-    @Select("select * from mailuser where name = #{name}")
-    MailUser findLoginUser(String name);
+    @Select("select * from mailuser where name = #{name} and password = #{password}")
+    MailUser findLoginUser(String name,String password);
 }
