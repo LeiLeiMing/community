@@ -37,12 +37,12 @@
             <!--tag-->
             <div>
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active" ><a onclick="newquestion()" href="#home" aria-controls="home" role="tab" data-toggle="tab">最新</a></li>
-                    <li  role="presentation" ><a onclick="hostquestion()" href="#profile" aria-controls="profile" role="tab" data-toggle="tab"  >最热</a></li>
+                    <li role="presentation"  ><a onclick="newquestion()" href="#home" aria-controls="home" role="tab" data-toggle="tab">最新</a></li>
+                    <li id="hot" role="presentation"  class="active"><a onclick="hostquestion()" href="#profile" aria-controls="profile" role="tab" data-toggle="tab"  >最热</a></li>
                     <li role="presentation" ><a href="#zeromessage" aria-controls="zeromessage" role="tab" data-toggle="tab">消灭零回复</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active " id="home">
+                    <div role="tabpanel" class="tab-pane fade in active " id="profile">
                         <div  style="margin-top: 30px"  class="media" th:each="question : ${allquestion}">
                             <span class="media-left">
                                 <a href="#">
@@ -60,29 +60,52 @@
                             </span>
                         </span>
                         </div>
-                        <!--page-->
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li th:if="${pages.haveFirstPage}">
-                                    <a th:href="@{/(page=1)}" aria-label="Previous">
-                                        <span aria-hidden="true">首页</span>
-                                    </a>
-                                </li>
-                                <li th:if="${pages.havePrePage}"><a th:href="@{/(page=${pages.page-1})}">上页</a></li>
-                                <li th:each="page : ${pages.pages}" th:class="${pages.page==page}?'active' : ''">
-                                    <a th:href="@{/(page=${page})}" th:text="${page}"></a>
-                                </li>
-                                <li th:if="${pages.haveNextPage}"><a th:href="@{/(page=${pages.page+1})}">下页</a></li>
-                                <li th:if="${pages.haveEndPage}">
-                                    <a th:href="@{/(page=${pages.countsize})}" aria-label="Next">
-                                        <span aria-hidden="true">尾页</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!--/page-->
                     </div>
+                    <div role="tabpanel" class="tab-pane fade " id="profile">
+                        <!--hot-->
+                        <div  style="margin-top: 30px"  class="media" th:each="question : ${session.hotquestion}">
+                            <span class="media-left">
+                                <a href="#">
+                                    <img style="width: 40px;height: 40px" class="img-rounded" th:src="${question.saveSession.avatar_url}" alt="...">
+                                </a>
+                            </span>
+                            <span class="media-body">
+                                <h4 class="media-heading">
+                                    <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                                    <img src="/img/hot.png" style="width: 20px;height: 20px;float: right">
+                                </h4>
+                                <span class="text-desc">
+                                    <span th:text="${question.username}"></span> .
+                                    <span th:text="${question.commentcount}"></span>个回复 .
+                                    <span th:text="${question.viewcount}"></span>次浏览 .<span th:text="${#dates.format(question.createtime,'yyyy-MM-dd hh:mm')}"></span>
+                                </span>
+                            </span>
+                        </div>
+                        <!--/hot-->
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="zeromessage"></div>
                 </div>
+                <!--page-->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:if="${pages.haveFirstPage}">
+                            <a th:href="@{/(page=1)}" aria-label="Previous">
+                                <span aria-hidden="true">首页</span>
+                            </a>
+                        </li>
+                        <li th:if="${pages.havePrePage}"><a th:href="@{/question/hot/(page=${pages.page-1})}">上页</a></li>
+                        <li th:each="page : ${pages.pages}" th:class="${pages.page==page}?'active' : ''">
+                            <a th:href="@{/question/hot/(page=${page})}" th:text="${page}"></a>
+                        </li>
+                        <li th:if="${pages.haveNextPage}"><a th:href="@{/question/hot/(page=${pages.page+1})}">下页</a></li>
+                        <li th:if="${pages.haveEndPage}">
+                            <a th:href="@{/question/hot/(page=${pages.countsize})}" aria-label="Next">
+                                <span aria-hidden="true">尾页</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--/page-->
             </div>
             <!--/tag-->
         </div>

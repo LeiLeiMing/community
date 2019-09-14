@@ -89,9 +89,11 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,HttpServletResponse response){
         request.getSession().removeAttribute("user");
+        Object user = request.getSession().getAttribute("user");
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        Cookie[] cookies = request.getCookies();
         return "redirect:/";
     }
 }

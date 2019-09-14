@@ -34,6 +34,7 @@ public class LoginServiceImpl implements LoginService {
                     //核对Cookie数据库是否有这个value
                     SaveSession user = loginDao.findSessionByToken(value);
                     if(user!=null){
+                        System.out.println(user);
                         //有，把查询到的用户名放进去
                         request.getSession().setAttribute("user",user);
                         return user;

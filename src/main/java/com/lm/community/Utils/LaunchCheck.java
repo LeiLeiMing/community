@@ -2,6 +2,9 @@ package com.lm.community.Utils;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * 判断空格
+ */
 public class LaunchCheck {
     public static boolean check(String title,String desc,String Tag){
         boolean check1 = false;

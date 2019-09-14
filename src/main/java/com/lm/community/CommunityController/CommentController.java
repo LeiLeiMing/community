@@ -37,13 +37,11 @@ public class CommentController {
     public Object comment(@RequestBody Comment comment, HttpServletRequest request){
 
         Map<Object, Object> map = new HashMap<>();
-
         //判断是否全部为空格
         if(CommentCheck.check(comment.getComment())==false){
             map.put("message","commentisnull");
             return map;
         }
-
         if(comment.getComment()==""){
             map.put("message","commentisnull");
             return map;

@@ -20,7 +20,6 @@ import java.util.List;
 @Controller
 public class ProfileController {
 
-
     @Autowired
     private IndexService indexService;
     @Autowired
@@ -28,22 +27,18 @@ public class ProfileController {
     @Autowired
     private PageService pageService;
 
-
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action")String action, Model model, HttpServletRequest request,
              @RequestParam(name = "page",defaultValue = "1")Integer page, @RequestParam(name = "size",defaultValue = "10")Integer size){
-
         //登录判断
         if(request.getSession().getAttribute("user")==null){
             model.addAttribute("error","未登录");
             return "redirect:/";
         }
-
         SaveSession user = (SaveSession) request.getSession().getAttribute("user");
         //查询所有未（总）读评论数量
         Integer allNotReadCount = indexService.findAllNotReadCount(user.getName());
         request.getSession().setAttribute("allnotreadcount",allNotReadCount);
-
         if("questions".equals(action)){
             //调用Service查询当前用户id下的提问文章
             List<Question> question = pageService.findQuestionByUserId(page, size, model, request);

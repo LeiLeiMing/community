@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 发送邮箱专用
+ * send mail code
  */
 @Controller
 public class SendMailController {
-
 
     @ResponseBody
     @PostMapping("/mailuser/sendcode")

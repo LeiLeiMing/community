@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MailUserDao {
 
+    /**
+     * 保存邮箱用户
+     * @param mailUser
+     */
     @Insert("insert into mailuser (name,password,avatar_url) values(#{name},#{password},#{avatar_url})")
     public void registerMailUser(MailUser mailUser);
 

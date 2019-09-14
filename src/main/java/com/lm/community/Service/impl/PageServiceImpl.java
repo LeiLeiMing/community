@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Service("pageService")
 @Transactional
-public class PageServiceImpl implements PageService {
+public class PageServiceImpl extends PageService {
 
     @Autowired
     private PageDao pageDao;
@@ -139,5 +139,20 @@ public class PageServiceImpl implements PageService {
     @Override
     public Integer likecount(Integer questionid) {
         return pageDao.likecount(questionid);
+    }
+
+    @Override
+    public List<Question> findAllHotQuestionByLimit(Integer page, Integer size,Model model) {
+        Page pagetext = new Page();
+        //热门总条数
+        Integer count = this.findHotQuestionCount();
+        pagetext.setData(page,size,count);
+        model.addAttribute("pages",pagetext);
+        return pageDao.findAllHotQuestionByLimit(pagetext.getBeginpage(),pagetext.getSize());
+    }
+
+    @Override
+    public Integer findHotQuestionCount() {
+        return pageDao.findHotQuestionCount();
     }
 }

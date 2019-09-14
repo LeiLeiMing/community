@@ -30,7 +30,6 @@ public class IndexController {
     @Autowired
     private PageService pageService;
 
-
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model,
                         @RequestParam(name = "page",defaultValue = "1")Integer page,
@@ -55,6 +54,9 @@ public class IndexController {
         List<Question> newQuestion = pageService.findNewQuestion();
         request.getSession().setAttribute("new",newQuestion);
         model.addAttribute("allquestion",allquestion);
+        //查询最热tag
+        //List<Question> hotquestion = pageService.findAllHotQuestionByLimit(page, size,model);
+        //request.getSession().setAttribute("hotquestion",hotquestion);
         return "index";
     }
 }

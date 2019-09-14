@@ -30,6 +30,14 @@ public class MailUserLoginController {
     @Autowired
     private SessionService sessionService;
 
+    /**
+     * 邮箱用户登录
+     * @param mailUser
+     * @param code
+     * @param request
+     * @param response
+     * @return
+     */
     @ResponseBody
     @PostMapping("/mailuser/login")
     public Object login(MailUser mailUser, String code, HttpServletRequest request, HttpServletResponse response){

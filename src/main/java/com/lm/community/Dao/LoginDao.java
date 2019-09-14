@@ -9,6 +9,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface LoginDao {
+    /**
+     * 根据token查询用户
+     * @param token
+     * @return
+     */
     @Select("select * from savesession where token = #{token}")
     SaveSession findSessionByToken(@Param(value = "token")String token);
 }

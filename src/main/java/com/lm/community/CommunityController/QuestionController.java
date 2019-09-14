@@ -159,4 +159,21 @@ public class QuestionController {
         map.put("likecount",likecount);
         return map;
     }
+
+    /**
+     * 最热
+     * @param request
+     * @param model
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/question/hot")
+    public String hotquestion(HttpServletRequest request, Model model,
+                              @RequestParam(name = "page",defaultValue = "1")Integer page,
+                              @RequestParam(name = "size",defaultValue = "20")Integer size){
+        List<Question> hotquestion = pageService.findAllHotQuestionByLimit(page, size,model);
+        model.addAttribute("allquestion",hotquestion);
+        return "hot";
+    }
 }

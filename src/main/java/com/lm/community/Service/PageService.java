@@ -8,26 +8,30 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-public interface PageService {
+public abstract class PageService {
 
 
-    List<Question> findQuestionByUserId(Integer page,Integer size, Model model,HttpServletRequest request);
+    public abstract List<Question> findQuestionByUserId(Integer page, Integer size, Model model, HttpServletRequest request);
 
-    Question findQuestionById(Integer id);
+    public abstract Question findQuestionById(Integer id);
 
-    public void updateViewCount(Integer id);
+    public abstract void updateViewCount(Integer id);
 
-    List<Question> findSimleQuestion(String[] tags,Integer id);
+    public abstract List<Question> findSimleQuestion(String[] tags, Integer id);
 
-    public void editQuestionById(Question question);
+    public abstract void editQuestionById(Question question);
 
-    List<Question> findHostQuestions();
+    public abstract List<Question> findHostQuestions();
 
-    List<Question> findNewQuestion();
+    public abstract List<Question> findNewQuestion();
 
-    List<Question> searchQuestion(String search);
+    public abstract List<Question> searchQuestion(String search);
 
-    public void updateLikecount(Integer id);
+    public abstract void updateLikecount(Integer id);
 
-    public Integer likecount(Integer questionid);
+    public abstract Integer likecount(Integer questionid);
+
+    public abstract List<Question> findAllHotQuestionByLimit(Integer page, Integer size,Model model);
+
+    public abstract Integer findHotQuestionCount();
 }

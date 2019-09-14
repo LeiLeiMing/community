@@ -3,7 +3,7 @@ package com.lm.community.Utils;
 import java.util.Random;
 
 /**
- * 生成验证码
+ * 生成5位验证码
  */
 public class RandomCode {
     public static  Integer getCode(){

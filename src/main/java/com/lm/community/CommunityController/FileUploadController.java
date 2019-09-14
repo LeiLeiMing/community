@@ -17,10 +17,14 @@ import java.net.URL;
 @Controller
 public class FileUploadController {
 
-
     @Autowired
     private OSSFileUpload ossFileUpload;
 
+    /**
+     * 图片上传OSS
+     * @param request
+     * @return
+     */
     @PostMapping("/file/upload")
     @ResponseBody
     public FileUpload upload(HttpServletRequest request){

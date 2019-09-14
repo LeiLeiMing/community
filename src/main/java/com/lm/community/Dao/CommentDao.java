@@ -11,9 +11,18 @@ import java.util.List;
 @Repository
 public interface CommentDao {
 
+    /**
+     * 保存评论
+     * @param comment
+     */
     @Insert("insert into comment (questionid,comment,commentor,commenttime) values(#{questionid},#{comment},#{commentor},#{commenttime})")
     void saveComment(Comment comment);
 
+    /**
+     * 查询该文章Id下的所以评论
+     * @param commentor
+     * @return
+     */
     @Select("select * from comment  where questionid = #{id} order by id desc")
     @Results(id = "comment", value = {
             @Result(id = true,property = "id",column = "id"),
