@@ -4,22 +4,14 @@
 ```java
 时间2019年8月--
 
-使用技术栈
-
+技术栈：
 SpringBoot
-
 MyBatis
-
 Mysql
-
 Jquery
-
 JS
-
 css
-
 Bootstrap
-
 thymeleaf
 ```
 
@@ -64,7 +56,7 @@ thymeleaf
 
 ```java
 论坛演示
-
+http://116.62.125.141/
 ```
 
 
