@@ -1,16 +1,28 @@
+```java
 基于SpringBoot的社区
-
+```
+```java
 时间2019年8月--
 
 使用技术栈
+
 SpringBoot
+
 MyBatis
+
 Mysql
+
 Jquery
+
 JS
+
 css
+
 Bootstrap
+
 thymeleaf
+```
+
 
 相关资料
 
@@ -27,6 +39,7 @@ thymeleaf
 [OSS SDK实现图片上传](https://)
 
 相关工具
+
 [阿里云存储](https://)
 
 [GIT版本控制](https://)
