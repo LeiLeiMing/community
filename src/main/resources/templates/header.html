@@ -34,6 +34,9 @@
                 <li>
                     <a  href="/"><span><img style="width: 20px" src="/img/find.png" /></span>发现</a>
                 </li>
+                    <li>
+                        <a  class="href" data-toggle="modal" data-target="#huatiModal" >话题</a>
+                    </li>
                 <li th:if="${session.user!=null}" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
                         <span><span class="glyphicon glyphicon-bell" aria-hidden="true"></span><span class="badge" style="background-color: red" th:if="${session.allnotreadcount!=0}" th:text="${session.allnotreadcount}">42</span></span>

@@ -17,4 +17,10 @@ public interface LaunchService {
 
     Integer findAllCommentById(Integer id);
 
+    public Question findQuestionById(Integer id);
+
+    public Question findLastQuestion(String name);
+
+    List<Question> findAllTopicalQuestionByLimi(Integer page,Integer size, Model model,Integer topical);
+
 }

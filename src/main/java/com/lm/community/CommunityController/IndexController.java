@@ -54,9 +54,8 @@ public class IndexController {
         List<Question> newQuestion = pageService.findNewQuestion();
         request.getSession().setAttribute("new",newQuestion);
         model.addAttribute("allquestion",allquestion);
-        //查询最热tag
-        //List<Question> hotquestion = pageService.findAllHotQuestionByLimit(page, size,model);
-        //request.getSession().setAttribute("hotquestion",hotquestion);
+        //查询热门标签
+
         return "index";
     }
 }

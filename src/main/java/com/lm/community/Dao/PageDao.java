@@ -134,4 +134,36 @@ public interface PageDao {
 
     @Select("select count(1) from question where viewcount != 0")
     public Integer findHotQuestionCount();
+
+    /**
+     * 查询该用户最后一次插入的数据
+     * @param name
+     * @return
+     */
+    @Select("select * from question where username = #{name} order  by id desc limit 1 ")
+    public Question findLastQuestion(String name);
+
+    @Select("select * from question where id in(select questionid from topical where topical.topicaltype = #{topical}) LIMIT #{page},#{size}")
+    @Results(id = "limittopicalquestion", value = {
+            @Result(id = true,property = "id",column = "id"),
+            @Result(property = "desction",column = "desction"),
+            @Result(property = "createtime",column = "createtime"),
+            @Result(property = "modiftime",column = "modiftime"),
+            @Result(property = "author",column = "author"),
+            @Result(property = "commentcount",column = "commentcount"),
+            @Result(property = "viewcount",column = "viewcount"),
+            @Result(property = "likecount",column = "likecount"),
+            @Result(property = "tag",column = "tag"),
+            @Result(property = "title",column = "title"),
+            @Result(property = "username",column = "username"),
+            @Result(property = "saveSession",column = "author",
+                    many = @Many(select = "com.lm.community.Dao.SaveSessionDao.findUserById",fetchType = FetchType.DEFAULT)),
+    })
+    List<Question> findAllTopicalQuestionByLimit(@Param(value = "page")Integer page,@Param(value = "size")Integer size,@Param(value = "topical")Integer topical);
+
+    @Select("select count(*) from question where id in (select questionid from topical where topicaltype = #{topical})")
+    public Integer findTopicalCountQuestion(Integer topical);
+
 }
+
+

@@ -4,12 +4,14 @@ import com.lm.community.Domain.Question;
 import com.lm.community.Domain.SaveSession;
 import com.lm.community.Service.IndexService;
 import com.lm.community.Service.LaunchService;
+import com.lm.community.Service.TopicalService;
 import com.lm.community.Utils.LaunchCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +22,8 @@ public class LaunchController {
     private LaunchService launchService;
     @Autowired
     private IndexService indexService;
+    @Autowired
+    private TopicalService topicalService;
 
     @GetMapping("/launch")
     public String launch(HttpServletRequest request){
@@ -39,7 +43,7 @@ public class LaunchController {
      * @return
      */
     @PostMapping("/dolaunch")
-    public String dolaunch(Question question, HttpServletRequest request, Model model){
+    public String dolaunch(@RequestParam(name = "topical")Integer topical, Question question, HttpServletRequest request, Model model){
         //核实是否有空格
         String title = question.getTitle();
         String desction = question.getDesction();
@@ -47,18 +51,23 @@ public class LaunchController {
         if(question!=null){
             //核实空格
             if(LaunchCheck.check(title, desction, tag)==false){
-                System.out.println("进来发布的判断了");
-               request.getSession().setAttribute("error","填写内容不能为空，请重新发布");
+                request.getSession().setAttribute("error","填写内容不能为空，请重新发布");
                 return "redirect:/launch";
             }
             //设置一些数据的初始值
             question.setLikecount(0);
             question.setCommentcount(0);
             question.setViewcount(0);
-            System.out.println(question);
             //存进数据库
-            if(request.getSession().getAttribute("user")!=null){
+            SaveSession user = (SaveSession) request.getSession().getAttribute("user");
+            if(user!=null){
                 launchService.saveQuestion(question,request);
+                //查询 获取Id
+                Question lastQuestion = launchService.findLastQuestion(user.getName());
+                //插入话题
+                if(topical!=0){
+                    topicalService.addTopical(lastQuestion.getId(),topical);
+                }
                 return "redirect:/";
             }
             return "redirect:/";

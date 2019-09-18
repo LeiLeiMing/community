@@ -55,12 +55,6 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.7</version>
         </dependency>
-        <!--弹幕抓取工具-->
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.0</version>
-        </dependency>
         <!--lombok插件，可以快速生成get和set-->
         <dependency>
             <groupId>org.projectlombok</groupId>

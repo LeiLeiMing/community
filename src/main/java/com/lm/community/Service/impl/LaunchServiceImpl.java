@@ -2,6 +2,7 @@ package com.lm.community.Service.impl;
 
 import com.lm.community.Dao.CommentDao;
 import com.lm.community.Dao.LaunchDao;
+import com.lm.community.Dao.PageDao;
 import com.lm.community.Domain.Page;
 import com.lm.community.Domain.Question;
 import com.lm.community.Domain.SaveSession;
@@ -27,6 +28,8 @@ public class LaunchServiceImpl implements LaunchService {
     private LaunchDao launchDao;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private PageDao pageDao;
 
     @Override
     public void saveQuestion(Question question, HttpServletRequest request) {
@@ -70,6 +73,27 @@ public class LaunchServiceImpl implements LaunchService {
     @Override
     public Integer findAllCommentById(Integer id) {
         return launchDao.findAllCommentById(id);
+    }
+
+    @Override
+    public Question findQuestionById(Integer id) {
+        return pageDao.findQuestionById(id);
+    }
+
+    @Override
+    public Question findLastQuestion(String name) {
+        return pageDao.findLastQuestion(name);
+    }
+
+    @Override
+    public List<Question> findAllTopicalQuestionByLimi(Integer page, Integer size, Model model, Integer topical) {
+        Page pagetext = new Page();
+        //查询话题下总条数
+        Integer count = pageDao.findTopicalCountQuestion(topical);
+        pagetext.setData(page,size,count);
+        model.addAttribute("pages",pagetext);
+        //把当前页和总页数传进domain工具中进行判断处理
+        return pageDao.findAllTopicalQuestionByLimit(pagetext.getBeginpage(),pagetext.getSize(),topical);
     }
 
 }
